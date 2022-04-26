@@ -1,6 +1,7 @@
 
 package com.tallereggs.entidades;
 
+import com.tallereggs.enums.EnumROL;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -20,7 +21,7 @@ public class Usuario {
     private Boolean alta;
     private String usuarioLog;
     private String password;
-    private Enum ROL;
+    private EnumROL ROL;
 
     /**
      * @return the id
@@ -137,14 +138,14 @@ public class Usuario {
     /**
      * @return the ROL
      */
-    public Enum getROL() {
+    public EnumROL getROL() {
         return ROL;
     }
 
     /**
      * @param ROL the ROL to set
      */
-    public void setROL(Enum ROL) {
+    public void setROL(EnumROL ROL) {
         this.ROL = ROL;
     }
     

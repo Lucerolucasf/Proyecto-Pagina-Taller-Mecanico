@@ -1,6 +1,7 @@
 
 package com.tallereggs.entidades;
 
+import com.tallereggs.enums.EnumROL;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -23,7 +24,7 @@ public class Vehiculo {
     private Usuario usuario;
     private Boolean alta;
     //private Img tarjetaVerde;
-    private Enum estado;
+    private EnumROL estado;
 
     public String getId() {
         return id;
@@ -89,11 +90,11 @@ public class Vehiculo {
         this.alta = alta;
     }
 
-    public Enum getEstado() {
+    public EnumROL getEstado() {
         return estado;
     }
 
-    public void setEstado(Enum estado) {
+    public void setEstado(EnumROL estado) {
         this.estado = estado;
     }
     
