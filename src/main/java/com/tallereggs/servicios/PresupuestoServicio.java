@@ -2,8 +2,11 @@
 package com.tallereggs.servicios;
 
 import com.tallereggs.entidades.Presupuesto;
+import com.tallereggs.entidades.PresupuestoDetalle;
 import com.tallereggs.errores.ErrorServicio;
+import com.tallereggs.repositorios.PresupuestoDetalleRepositorio;
 import com.tallereggs.repositorios.PresupuestoRepositorio;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +17,9 @@ public class PresupuestoServicio {
     
     @Autowired
     private PresupuestoRepositorio presupuestoRepositorio;
+    
+    @Autowired
+    private PresupuestoDetalleRepositorio presupuestoDetalleRepositorio;
     
     
     
@@ -57,9 +63,16 @@ public class PresupuestoServicio {
             presupuestoRepositorio.save(presupuesto);
         }
         
-        
+        //Método para eliminar presupuesto
         @Transactional(rollbackFor = {Exception.class})
         public void eliminar(String id){
+            //buscar todos los presupuestosDetalles
+            List<PresupuestoDetalle> presupuestosDetalle = presupuestoDetalleRepositorio.buscarPresupuestoDetallePorPresupuesto(id);
+            //eliminar presupuestos detalles
+            presupuestoDetalleRepositorio.deleteAll(presupuestosDetalle);
+            //eliminar presupuesto
+            presupuestoRepositorio.deleteById(id);
+            
             
         }
     
@@ -78,13 +91,13 @@ public class PresupuestoServicio {
     
     //Método para validar que los datos ingresados no sean nulos ni vengan vacíos
     public void validar(String idVehiculo, String idUsuario, String fallaDescripcion, Float total) throws ErrorServicio{
-        if(idVehiculo == null || idVehiculo.isEmpty()) {
+        if(idVehiculo == null || idVehiculo.trim().isEmpty()) { //El método trim(), sirve para que no llenen el form con un espacio vacío presionando barra espaciadora.
             throw new ErrorServicio("Ingrese un vehículo válido.");
         }
-        if(idUsuario == null || idUsuario.isEmpty()){
+        if(idUsuario == null || idUsuario.trim().isEmpty()){
             throw new ErrorServicio("Ingrese un usuario válido.");
         }
-        if(fallaDescripcion == null || fallaDescripcion.isEmpty()){
+        if(fallaDescripcion == null || fallaDescripcion.trim().isEmpty()){
             throw new ErrorServicio("La falla de la descripción no puede ser nula.");
         }
         if(total == null || total < 0){
