@@ -16,4 +16,7 @@ public PresupuestoDetalle buscarPresupuestoDetallePorId(@Param("id") String id);
 @Query("SELECT d FROM PresupuestoDetalle d WHERE d.presupuesto.id LIKE :id")
 public List<PresupuestoDetalle> buscarPresupuestoDetallePorPresupuesto(@Param("id") String id);
 
+
+
 }
+
