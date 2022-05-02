@@ -115,6 +115,15 @@ public class UsuarioServicio {
         return usuario;
 
     }
+    
+    @Transactional(readOnly = true)
+    public List<Usuario> buscarPorUsername(String username) {
+
+        List<Usuario> usuario = usuarioRepositorio.buscarPorUsername(username);
+
+        return usuario;
+
+    }
 
     @Transactional(readOnly = true)
     public List<Usuario> listarUsuarios() {
