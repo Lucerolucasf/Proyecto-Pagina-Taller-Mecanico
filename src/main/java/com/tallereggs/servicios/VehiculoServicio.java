@@ -17,7 +17,7 @@ public class VehiculoServicio {
     
     
     @Transactional(rollbackFor = Exception.class)
-    public Vehiculo crear(String id, String patente, String modelo, String marca, String anio, String km, String idUsuario, Img tarjetaVerde, EnumROL estado) throws Exception {
+    public Vehiculo crear(String id, String patente, String modelo, String marca, String anio, String km, String idUsuario, Img tarjetaVerde, EnumEstado estado) throws Exception {
 
         validar(patente, modelo, marca, anio, km, idUsuario, tarjetaVerde, estado);
         Vehiculo vehiculo = new Vehiculo();
@@ -41,7 +41,7 @@ public class VehiculoServicio {
     
     
     //Método para validar que los datos ingresados no sean nulos ni vengan vacíos.
-    public void validar(String patente, String modelo, String marca, String anio, String km, String idUsuario, Img tarjetaVerde, EnumROL estado) throws Exception {
+    public void validar(String patente, String modelo, String marca, String anio, String km, String idUsuario, Img tarjetaVerde, EnumEstado estado) throws Exception {
 
         if (patente == null || patente.isEmpty()) {
             throw new ErrorServicio ("Ingrese una patente válida.");
@@ -84,7 +84,7 @@ public class VehiculoServicio {
         
         
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar (String id, String patente, String modelo, String marca, String anio, String km, String idUsuario, Img tarjetaVerde, EnumROL estado) throws Exception {
+    public void actualizar (String id, String patente, String modelo, String marca, String anio, String km, String idUsuario, Img tarjetaVerde, EnumEstado estado) throws Exception {
 
         Vehiculo vehiculo = buscarPorId(id);
         if (vehiculo == null) {
@@ -177,7 +177,7 @@ public class VehiculoServicio {
     }
 
 
-    public void validarActualizar(String id, String patente, String modelo, String marca, String anio, String km, String idUsuario, Img tarjetaVerde, EnumROL estado) throws Exception {
+    public void validarActualizar(String id, String patente, String modelo, String marca, String anio, String km, String idUsuario, Img tarjetaVerde, EnumEstado estado) throws Exception {
 
         if (id == null) {
             throw new Exception("Debe ingresar un id");
