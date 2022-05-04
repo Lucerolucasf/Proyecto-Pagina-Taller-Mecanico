@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,11 +23,14 @@ public class Vehiculo {
     private String modelo;
     private String marca;
     private String anio;
-    private String km;
+    private String km; 
+    
     @ManyToOne
     private Usuario usuario;
     private Boolean alta;
-    //private MultipartFile tarjetaVerde; estaría bien así? o hay q crear otra entidad, servicio, repositorio......
+    
+    @OneToOne
+    private TarjetaVerde tv;
     private EnumEstado estado;
 
     /**
@@ -141,6 +146,20 @@ public class Vehiculo {
     }
 
     /**
+     * @return the tv
+     */
+    public TarjetaVerde getTv() {
+        return tv;
+    }
+
+    /**
+     * @param tv the tv to set
+     */
+    public void setTv(TarjetaVerde tv) {
+        this.tv = tv;
+    }
+
+    /**
      * @return the estado
      */
     public EnumEstado getEstado() {
@@ -153,6 +172,8 @@ public class Vehiculo {
     public void setEstado(EnumEstado estado) {
         this.estado = estado;
     }
+
+    
 
     
     

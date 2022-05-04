@@ -26,7 +26,7 @@ public class TarjetaVerdeServicio {
             tv.setNombre(archivo.getName());
             tv.setContenido(archivo.getBytes());
             
-            return tarjetaVerdeRepositorio.save(tv)
+            return tarjetaVerdeRepositorio.save(tv);
            } catch(Exception e){
                System.err.println(e.getMessage());
            }
@@ -51,7 +51,7 @@ public class TarjetaVerdeServicio {
             tv.setNombre(archivo.getName());
             tv.setContenido(archivo.getBytes());
             
-            return tarjetaVerdeRepositorio.save(tv)
+            return tarjetaVerdeRepositorio.save(tv);
            } catch(Exception e){
                System.err.println(e.getMessage());
            }
