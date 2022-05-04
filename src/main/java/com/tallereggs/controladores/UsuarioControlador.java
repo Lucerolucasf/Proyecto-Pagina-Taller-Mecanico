@@ -62,8 +62,7 @@ public class UsuarioControlador {
 
         return "usuario-editar.html";
     }
-    
-    
+        
     @GetMapping("/usuario/bajaUsuario")
     public String bajaUsuario() {
         return "usuario-bajaUsuario.html";

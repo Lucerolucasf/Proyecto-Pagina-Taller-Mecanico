@@ -152,7 +152,7 @@ public class UsuarioServicio {
         Usuario u = buscarUsuarioPorId(id);
 
         if (u.getAlta()) {
-            System.out.println("El libro ya está dado de baja");
+            System.out.println("El usuario ya está dado de baja");
         }
 
         u.setAlta(Boolean.TRUE);
