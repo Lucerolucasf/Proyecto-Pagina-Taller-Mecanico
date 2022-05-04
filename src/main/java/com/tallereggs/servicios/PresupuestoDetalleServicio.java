@@ -72,11 +72,17 @@ public class PresupuestoDetalleServicio {
     @Transactional(rollbackFor = Exception.class)
     public Float sumarPrecios(String id) {
         Float sumaTotal = 0f;
-        List<PresupuestoDetalle> detallesPresupuesto = presupuestoDetalleRepositorio.buscarPresupuestoDetallePorPresupuesto(id);
+        List<PresupuestoDetalle> detallesPresupuesto = listaDeDetallesPorPresupuestoId (id);
         for (PresupuestoDetalle aux : detallesPresupuesto) {
-            sumaTotal =+ aux.getPrecio();
-        }
-        return sumaTotal;
+            sumaTotal =+ (aux.getPrecio() * aux.getCantidad());
+            }
+        return sumaTotal; 
+    }
+    
+    //Método para buscar los detalles de presupuesto por id de presupuesto.
+    @Transactional(readOnly = true)
+    public List<PresupuestoDetalle> listaDeDetallesPorPresupuestoId(String id){
+        return presupuestoDetalleRepositorio.buscarPresupuestoDetallePorPresupuesto(id);
     }
 
     //Método para buscar por Id verificando que se encuentre en la base de datos

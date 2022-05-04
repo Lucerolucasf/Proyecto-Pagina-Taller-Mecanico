@@ -19,6 +19,9 @@ public class PresupuestoServicio {
 
     @Autowired
     private PresupuestoDetalleRepositorio presupuestoDetalleRepositorio;
+    
+    @Autowired
+    private PresupuestoDetalleServicio presupuestoDetalleServicio;
 
     //Método para agregar presupuestos
     @Transactional(rollbackFor = {Exception.class})
@@ -31,7 +34,7 @@ public class PresupuestoServicio {
         //Vehiculo vehiculo = vehiculoServicio.buscarPorId(idVehiculo);
         //Usuario usuario = usuarioServicio.buscarPorId(idUsuario);
         presupuesto.setFallaDescripcion(fallaDescripcion);
-        presupuesto.setTotal(total);
+        presupuesto.setTotal(0f);
         //presupuesto.setVehiculo(vehiculo);
         //presupuesto.setUsuario(usuario);
 
@@ -58,7 +61,10 @@ public class PresupuestoServicio {
 
     //Método para eliminar presupuesto
     @Transactional(rollbackFor = {Exception.class})
-    public void eliminar(String id) {
+    public void eliminar(String id) throws ErrorServicio {
+        if(id == null || id.isEmpty()){
+            throw new ErrorServicio("Ingrese un id válido por favor.");
+        }
         //buscar todos los presupuestosDetalles
         List<PresupuestoDetalle> presupuestosDetalle = presupuestoDetalleRepositorio.buscarPresupuestoDetallePorPresupuesto(id);
         //eliminar presupuestos detalles
@@ -83,11 +89,42 @@ public class PresupuestoServicio {
         }
 
     }
+    //Averiguar como traer todos los detalles a un presupuesto en particular. CONSULTAR!!!!!!!!!
+    @Transactional(readOnly = true)
+    public List<PresupuestoDetalle> listarDetallesEnPresupuesto(String id) throws ErrorServicio{
+         if(id == null || id.isEmpty()){
+            throw new ErrorServicio("Ingrese un id válido.");
+        }
+        //buscar todos los presupuestosDetalles
+        List<PresupuestoDetalle> presupuestosDetalle = presupuestoDetalleRepositorio.buscarPresupuestoDetallePorPresupuesto(id);
+       
+        return presupuestosDetalle;
+        
+    }
+       //Averiguar como traer todos los detalles a un presupuesto en particular. CONSULTAR!!!!!!!!!
+//    @Transactional(readOnly = true)
+//    public Presupuesto listarDetallesEnPresupuesto(String id) throws ErrorServicio{
+//         if(id == null || id.isEmpty()){
+//            throw new ErrorServicio("Ingrese un id válido.");
+//        }
+//        //buscar todos los presupuestosDetalles
+//        List<PresupuestoDetalle> presupuestosDetalle = presupuestoDetalleRepositorio.buscarPresupuestoDetallePorPresupuesto(id);
+//       
+//        return 
+//        
+//    }
+        
     
     //Método para listar todos los presupuestos
     @Transactional(readOnly = true)
     public List<Presupuesto> listarTodos(){
         return presupuestoRepositorio.findAll();
+    }
+    
+    //Método para listar todos los detalles de presupuesto
+    @Transactional(readOnly = true)
+    public List<PresupuestoDetalle> listarDetalles(){
+        return presupuestoDetalleRepositorio.findAll();
     }
     
 
@@ -101,6 +138,8 @@ public class PresupuestoServicio {
             throw new ErrorServicio("No se encontró el presupuesto solicitado.");
         }
     }
+    
+
 
     //Método para validar que los datos ingresados no sean nulos ni vengan vacíos
     public void validar(String idVehiculo, String idUsuario, String fallaDescripcion, Float total) throws ErrorServicio {
