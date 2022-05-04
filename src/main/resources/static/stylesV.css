@@ -1,0 +1,13 @@
+.floatR {
+    float: right;
+    margin-top: 0.5%;
+    margin-right: 0.5%;
+}
+
+body {
+    background-color: gray;
+}
+
+nav {
+    margin-top: 5px;
+}

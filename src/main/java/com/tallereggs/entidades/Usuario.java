@@ -19,7 +19,7 @@ public class Usuario {
     private String celular;
     private String direccion;
     private Boolean alta;
-    private String usuarioLog;
+    private String usuarioLog; // cambiar nombre de variable
     private String password;
     private EnumROL ROL;
 
