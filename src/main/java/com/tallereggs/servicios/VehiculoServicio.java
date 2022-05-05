@@ -94,11 +94,12 @@ public class VehiculoServicio {
         throw new ErrorServicio ("Ingrese una foto válida.");
         }
         
-        if (estado == null || estado.isEmpty()) {
+        if (estado == null) {
             throw new ErrorServicio ("Ingrese un estado válido.");
         }
-    
-    
+ 
+            
+    }
         //metodos siguientes
         
         
@@ -106,12 +107,13 @@ public class VehiculoServicio {
     public void actualizar (String id, String patente, String modelo, String marca, String anio, String km, String idUsuario, MultipartFile archivo, EnumEstado estado) throws Exception {
 
         
-        //Vehiculo vehiculo = vehiculoServicio.buscarPorId(id);
-        if (vehiculo.getId() == null) {
+        if (id == null) {
 
             throw new Exception("El vehículo no existe");
         }
 
+        Vehiculo vehiculo = vehiculoServicio.buscarPorId(id);
+        
         if (!vehiculo.getAlta()) {
             throw new Exception("El vehiculo está dado de baja");
         }
@@ -146,7 +148,7 @@ public class VehiculoServicio {
         return vehiculoRepositorio.findAll();
     }
 
-    }
+    
 
     @Transactional(readOnly = true)
     public Vehiculo buscarPorId(String id) {
