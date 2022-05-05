@@ -18,20 +18,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/presupuestoDetalle")//Definir con el frontend
+@RequestMapping("/presupuestoDetalle")
  class PresupuestoDetalleControlador {
     
     @Autowired
     private PresupuestoDetalleServicio presupuestoDetalleServicio;
     
-    
-    @GetMapping("/form")//Definir con el frontend
+    //Método para enviar a vista para agregar datos
+    @GetMapping("/form")
     public String form(){
         
-        return "#"; //Definir con frontend
+        return "AdministrarPresupuestoDetalle.html"; 
     }
     
-    @PostMapping("/form")//Definir con el frontend
+    //Método para crear detalles de presupuesto
+    @PostMapping("/form")
     public String crear(RedirectAttributes attr, @RequestParam String detalle, @RequestParam Integer cantidad, @RequestParam Float precio, @RequestParam String idPresupuesto){
         
         try {
@@ -41,25 +42,27 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
             attr.addFlashAttribute("error", ex.getMessage());
         }
         
-        return "#"; //Definir con el frontend
+        return "redirect:/form"; 
         
     }
     
-    @GetMapping("/lista/{id}")//Definir con el frontend
+    //Método para listar los detalles concretos de un Id presupuesto
+    @GetMapping("/lista/{id}")//Este Id es del presupuesto que se quiere listar sus detalles
     public String listaPorIdPresupuesto(ModelMap modelo,@PathVariable String idPresupuesto){
         List<PresupuestoDetalle> presupuestosDetalle =  presupuestoDetalleServicio.listaDeDetallesPorPresupuestoId(idPresupuesto);
         modelo.put("presupuestosDetalle", presupuestosDetalle);
-        return "#";//Definir con frontend
+        return "ListaPresupuestoDetallePorPresupuestoId.html";
     }
     
-    @GetMapping("/eliminar/{id}")//Definir con el frontend
+    //Método para eliminar detalles de presupuesto por Id de DetallePresupuesto
+    @GetMapping("/eliminar/{id}")
     public String eliminar(RedirectAttributes attr, @PathVariable String id){
         presupuestoDetalleServicio.eliminar(id);
         attr.addFlashAttribute("exito", "Se eliminó el detalle correctamente.");
         
-        return "#";//Definir con forntend
+        return "redirect:/lista";
     }
-    
+  //Método para ir a la vista de de lo que se modifique  
     @GetMapping("/modificar/{id}")
     public String editar(ModelMap modelo, @PathVariable String id){
         
@@ -69,9 +72,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
         } catch (ErrorServicio ex) {
           
         }
-        return "#";//Definir con frontend
+        return "EditarDetallePresupuesto.html";
     }
-    
+    //Método para modificar los detalles de un presupuesto
     @PostMapping("/modificar")
     public String modificar(RedirectAttributes attr, @RequestParam String id, @RequestParam String detalle, @RequestParam Integer cantidad, @RequestParam Float precio, @RequestParam String idPresupuesto){
         
@@ -81,12 +84,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
         } catch (ErrorServicio ex) {
             attr.addFlashAttribute("error", ex.getMessage());
         }
-        return "#";//Definir con frontend
+        return "redirect:/lista";
     }
     
-    
-    
-    
-    
-    
 }
+    
+    
+    
+    
+    
