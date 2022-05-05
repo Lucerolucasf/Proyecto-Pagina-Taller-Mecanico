@@ -1,14 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.tallereggs.servicios;
 
-/**
- *
- * @author matut
- */
+import org.springframework.stereotype.Service;
+
+@Service
 public class PresupuestoServicio {
+    
+    
+    
+    //Método para agregar presupuestos
+    public void agregar(String idVehiculo, String idUsuario, String fallaDescripcion, Float total){
+        
+    }
+    
+    public void validar(String idVehiculo, String idUsuario, String fallaDescripcion, Float total){
+        if(idVehiculo == null || idVehiculo.isEmpty()) {
+            
+        }
+    }
     
 }

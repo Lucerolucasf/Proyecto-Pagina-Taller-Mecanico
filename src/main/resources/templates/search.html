@@ -25,33 +25,12 @@
 
 
     <p th:if="${searchAuto == null}" class="text-danger">NINGUN VEHICULO ENCONTRADO</p>
-
-    <div th:if="${searchAuto != null}">
-        <!-- selecciona con th que tabla mostrar-->
-
-        <table class="table table-dark table-striped" id="tablaVehiculo">
-            <thead>
-                <tr>
-                    <th>PATENTE</th>
-                    <th>PROPIETARIO</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <!--CAMBIAR NOMBRE DE VARIABLES-->
-                <tr th:each="vehiculo, i : ${vehiculos}">
-                    <td th:text="${vehiculo.patente}"></td>
-                    <td th:text="${vehiculo.usuario.nombre}"></td>
-                    <td><button type="button" class="btn btn-warning">Ver Detalles</button></td>
-                    <td><button type="button" class="btn btn-success">Agregar Presupuesto</button></td>
-                </tr>
-
-            </tbody>
-        </table>
-    </div>
-
+    <p th:text="${searchAuto}" class="text-danger"></p>
+    
+    <p th:if="${searchCliente == null}" class="text-danger">NINGUN CLIENTE ENCONTRADO</p>
+    <p th:text="${searchCliente}" class="text-danger"></p>
+    
+     <!--TABLA CLIENTES-->
     <div th:if="${searchCliente != null}">
         <!-- selecciona con th que tabla mostrar-->
 
@@ -78,6 +57,35 @@
         </table>
 
     </div>
+     
+    <!--TABLA VEHICULOS-->
+    <div th:if="${searchAuto != null}">
+        <!-- selecciona con th que tabla mostrar-->
+
+        <table class="table table-dark table-striped" id="tablaVehiculo">
+            <thead>
+                <tr>
+                    <th>PATENTE</th>
+                    <th>PROPIETARIO</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <!--CAMBIAR NOMBRE DE VARIABLES-->
+                <tr th:each="vehiculo, i : ${vehiculos}">
+                    <td th:text="${vehiculo.patente}"></td>
+                    <td th:text="${vehiculo.usuario.nombre}"></td>
+                    <td><button type="button" class="btn btn-warning">Ver Detalles</button></td>
+                    <td><button type="button" class="btn btn-success">Agregar Presupuesto</button></td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+   
 </body>
 
 </html>

@@ -3,6 +3,8 @@ package com.tallereggs.entidades;
 
 import com.tallereggs.enums.EnumROL;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import org.hibernate.annotations.GenericGenerator;
@@ -19,8 +21,12 @@ public class Usuario {
     private String celular;
     private String direccion;
     private Boolean alta;
-    private String usuarioLog; // cambiar nombre de variable
+
+    private String username;
+    
     private String password;
+    
+    @Enumerated(EnumType.STRING)
     private EnumROL ROL;
 
     /**
@@ -110,15 +116,15 @@ public class Usuario {
     /**
      * @return the usuarioLog
      */
-    public String getUsuarioLog() {
-        return usuarioLog;
+    public String getUsername() {
+        return username;
     }
 
     /**
      * @param usuarioLog the usuarioLog to set
      */
-    public void setUsuarioLog(String usuarioLog) {
-        this.usuarioLog = usuarioLog;
+    public void setUsername(String usuarioLog) {
+        this.username = usuarioLog;
     }
 
     /**
@@ -148,5 +154,5 @@ public class Usuario {
     public void setROL(EnumROL ROL) {
         this.ROL = ROL;
     }
-    
+
 }
