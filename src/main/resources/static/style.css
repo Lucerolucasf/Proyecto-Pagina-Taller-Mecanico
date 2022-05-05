@@ -1,46 +1,61 @@
+
+/* index */
+
 body {
     font-family: 'Roboto', sans-serif;
     display: flexbox;
-    background-color: rgb(40, 136, 104);
+    background-color: rgb(93, 187, 155);
 }
 
 .button-iniciarSesion {
-    background-color: rgb(195, 195, 196);
-    text-align: center;
     float: right;
-    margin: 10px;
+    padding: 5px;
+    margin: 5px;
+}
+
+.button-iniciarSesion button {
+    margin: 5px;
+    padding-top: 5px;
 }
 
 .modal-content {
     background-color: antiquewhite;
 }
 
+.barra-opciones {
+    list-style: none;
+    background-color: gray;
+}
+
+.barra-opciones li {
+    display: inline-block;
+    color: black;
+}
 
 header h3.header-queHacemos {
     background-color: black;
-    font-family: 'Times New Roman', Times, serif ; 
+    font-family: 'Times New Roman', Times, serif;
     font-size: 100px;
 
 }
 
-div h3{
+div h3 {
     background-color: black;
-    font-family: 'Times New Roman', Times, serif ; 
+    font-family: 'Times New Roman', Times, serif;
     font-size: 100px;
     text-align: center;
     color: white;
 }
 
-.header-personal p{
+.header-personal p {
     color: white;
 }
 
 ul.nav {
     margin-left: 26%;
-}
-
-li.nav-item {
-    background-color: rgb(197, 195, 195);
+    display: inline;
+    display: flexbox;
+    display: inline-flexbox;
 }
 
 li.nav-item a:hover {
@@ -48,7 +63,7 @@ li.nav-item a:hover {
     color: white;
 }
 
-div.personal p{
+div.personal p {
     color: white;
 }
 
@@ -66,3 +81,69 @@ footer {
     color: white;
     display: flexbox;
 }
+
+.footer {
+    list-style: none;
+}
+
+.footer ul {
+    display: inline-block;
+}
+
+/* presupuesto */
+
+body.header-presupuesto {
+    background-color: rgb(85, 84, 84);
+    padding: 0px;
+    margin: 0px;
+}
+
+
+/* barra header */
+
+.presupuesto-barra-opciones{
+    margin: auto;
+    width: 500px;
+    font-family: Arial, Helvetica, sans-serif, sans-serif;
+}
+
+.presupuesto-barra-opciones li{
+    display: inline-block;
+}
+
+.presupuesto li{
+    display: inline;
+}
+
+ul, li{
+    list-style: none;
+}
+
+.presupuesto-barra-opciones li a{
+    background-color: black ;
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    display: block;
+}
+
+.presupuesto-barra-opciones li a:hover{
+    background-color: #434343;
+}
+
+.presupuesto-barra-opciones > li{
+    display: inline-block;    
+}
+
+.presupuesto-barra-opciones li ul{
+    display: none;
+    position: absolute;
+    min-width: 140px;
+}
+
+.presupuesto-barra-opciones li:hover > ul{
+    display: block;
+}
+
+
+
