@@ -19,7 +19,7 @@ public class Presupuesto {
     @ManyToOne
     private Usuario usuario;
     private String fallaDescripcion;
-    private Float total;
+    private Float total; //Total de la suma de todos los detalles del presupuesto
 
     /**
      * @return the id
