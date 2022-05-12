@@ -15,7 +15,8 @@ public class PresupuestoDetalle {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
     private String detalle;
-    private Integer cantidad;
+    private Integer cantidad; //Cantidad de elementos del detalle "2 amortiguadores delanteros"
+    private Float precio;
     @ManyToOne
     private Presupuesto presupuesto;
 
@@ -73,6 +74,20 @@ public class PresupuestoDetalle {
      */
     public void setPresupuesto(Presupuesto presupuesto) {
         this.presupuesto = presupuesto;
+    }
+
+    /**
+     * @return the precio
+     */
+    public Float getPrecio() {
+        return precio;
+    }
+
+    /**
+     * @param precio the precio to set
+     */
+    public void setPrecio(Float precio) {
+        this.precio = precio;
     }
     
 }

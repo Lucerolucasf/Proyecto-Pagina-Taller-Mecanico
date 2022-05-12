@@ -57,6 +57,11 @@ public class UsuarioServicio {
         }
 
 
+        List<Usuario> usuarios = buscarPorUsername(username);
+        if (!usuarios.isEmpty()) {
+            throw new Exception("El nombre de usuario ya existe");
+        }
+
         if (password == null || password.isEmpty()) {
             throw new Exception("Debe ingresar una clave de usuario");
         }
@@ -116,7 +121,7 @@ public class UsuarioServicio {
         return usuario;
 
     }
-    
+
     @Transactional(readOnly = true)
     public List<Usuario> buscarPorUsername(String username) {
 
@@ -166,7 +171,7 @@ public class UsuarioServicio {
 
         Usuario u = buscarUsuarioPorId(id);
 
-        if (u.getROL() ==EnumROL.PERSONAL ) {
+        if (u.getROL() == EnumROL.PERSONAL) {
             System.out.println("El usuario ya fue modificado como personal");
         }
 
