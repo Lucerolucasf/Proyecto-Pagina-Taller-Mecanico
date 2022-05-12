@@ -28,23 +28,19 @@ public class VehiculoServicio {
     @Autowired
     private UsuarioServicio usuarioServicio; 
     
-    @Autowired
-    private VehiculoServicio vehiculoServicio; 
-    
     @Transactional(rollbackFor = Exception.class)
-    public Vehiculo crear(String id, String patente, String modelo, String marca, String anio, String km, String idUsuario, MultipartFile archivo, EnumEstado estado) throws Exception {
+    public Vehiculo crear( String patente, String modelo, String marca, String anio, String km, String idUsuario, MultipartFile archivo, EnumEstado estado) throws Exception {
 
         validar(patente, modelo, marca, anio, km, idUsuario, archivo, estado);
         Vehiculo vehiculo = new Vehiculo();
 
-        vehiculo.setId(id);
         vehiculo.setPatente(patente);
         vehiculo.setModelo(modelo);
         vehiculo.setMarca(marca);
         vehiculo.setAnio(anio);
         vehiculo.setKm(km);
         vehiculo.setEstado(estado);
-        vehiculo.setUsuario(usuarioServicio.buscarPorId(idUsuario));
+        //vehiculo.setUsuario(usuarioServicio.buscarPorId(idUsuario));
         
         TarjetaVerde tv = tarjetaVerdeServicio.guardar(archivo);
         vehiculo.setTv(tv);
@@ -127,7 +123,7 @@ public class VehiculoServicio {
         vehiculo.setMarca(marca);
         vehiculo.setAnio(anio);
         vehiculo.setKm(km);
-        vehiculo.setUsuario(usuarioServicio.buscarPorId(idUsuario));
+        //vehiculo.setUsuario(usuarioServicio.buscarPorId(idUsuario));
         vehiculo.setEstado(estado);
 
         String idTarjetaVerde = null;
@@ -166,7 +162,8 @@ public class VehiculoServicio {
     @Transactional(readOnly = true)
     public List<Vehiculo> buscarPorPatente(String patente) {
 
-        List<Vehiculo> vehiculos = VehiculoRepositorio.buscarPorPatente(patente);
+        List<Vehiculo> vehiculos;
+        vehiculos = vehiculoRepositorio.buscarPorPatente(patente);
 
         return vehiculos;
 
@@ -234,10 +231,10 @@ public class VehiculoServicio {
             throw new Exception("Debe ingresar los kilómetros");
         }
         
-        Usuario usuario = usuarioServicio.buscarPorId(idUsuario);
-        if (usuario == null) {
-            throw new Exception("El usuario no existe");
-        }
+//        Usuario usuario = usuarioServicio.buscarPorId(idUsuario);
+//        if (usuario == null) {
+//            throw new Exception("El usuario no existe");
+//        }
 
         Vehiculo vehiculo = new Vehiculo();
         
