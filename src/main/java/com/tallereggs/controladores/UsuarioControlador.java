@@ -24,16 +24,23 @@ public class UsuarioControlador {
     }
 
     @PostMapping("/usuario/form")
-    public String crearUsuario(ModelMap modelo, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String celular, @RequestParam String direccion, @RequestParam String username, String password) throws Exception {
+    public String crearUsuario(RedirectAttributes attr, ModelMap modelo, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String celular, @RequestParam String direccion, @RequestParam(required = false) String username, String password) throws Exception {
 
         try {
             usuarioServicio.crear(nombre, apellido, celular, direccion, username, password, EnumROL.CLIENTE);
-            modelo.put("Exito", "El usuario '" + username + "' se cargó exitosamente.");
+            attr.addFlashAttribute("Exito", "El usuario '" + username + "' se cargó exitosamente.");
         } catch (Exception e) {
-            modelo.put("Error", e.getMessage());
+            attr.addFlashAttribute("Error", e.getMessage());
+
+            attr.addFlashAttribute("nombre", nombre);
+            attr.addFlashAttribute("apellido", apellido);
+            attr.addFlashAttribute("username", username);
+            attr.addFlashAttribute("celular", celular);
+            attr.addFlashAttribute("direccion", direccion);
+            attr.addFlashAttribute("password", password);
         }
 
-        return "inicioPersonal.html";
+        return "redirect:/inicioPersonal";
     }
 
     @GetMapping("/usuario/lista")
@@ -51,7 +58,7 @@ public class UsuarioControlador {
     }
 
     @PostMapping("/usuario/editarUsuario")
-    public String editarUsuario(ModelMap modelo, @RequestParam String id, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String celular, @RequestParam String direccion, @RequestParam String username, String password) throws Exception {
+    public String editarUsuario(ModelMap modelo, @RequestParam String id, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String celular, @RequestParam String direccion, @RequestParam(required = false) String username, String password) throws Exception {
 
         try {
             usuarioServicio.modificarUsuario(id, nombre, apellido, celular, direccion, username, password);
@@ -131,19 +138,29 @@ public class UsuarioControlador {
     public String buscador(ModelMap modelo, RedirectAttributes attr, @RequestParam(required = false) String searchAuto, @RequestParam(required = false) String searchCliente) {
 
         if (searchAuto != null) {
-            attr.addFlashAttribute("searchAuto", searchAuto);
+            attr.addAttribute("searchAuto", searchAuto);
         }
         if (searchCliente != null) {
-            attr.addFlashAttribute("searchCliente", searchCliente);
+            attr.addAttribute("searchCliente", searchCliente);
         }
-        System.out.println(searchAuto);
-        System.out.println(searchCliente);
-        
+
         return "redirect:/search";
     }
 
     @GetMapping("/search")
-    public String search() {
+    public String search(ModelMap modelo, RedirectAttributes attr, @RequestParam(required = false) String searchCliente, @RequestParam(required = false) String searchAuto) {
+        List<Usuario> usuarios;
+
+        usuarios = usuarioServicio.buscarPorNombre(searchCliente);
+
+        if (usuarios == null || usuarios.isEmpty()) {
+            modelo.put("vacio", searchCliente + " no se encontro en la base de datos");
+            return "inicioPersonal.html";
+//            attr.addFlashAttribute("vacio", searchCliente + " no se encontro en la base de datos");
+//            return "redirect: inicioPersonal.html";
+        }
+        modelo.put("searchCliente", searchCliente);
+        modelo.put("usuarios", usuarios);
 
         return "search.html";
     }

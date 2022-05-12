@@ -36,15 +36,19 @@ public class UsuarioServicio {
 
     public void validar(String nombre, String apellido, String celular, String direccion, String username, String password) throws Exception {
 
-        if (nombre == null) {
+        if (nombre == null || nombre.isEmpty()) {
             throw new Exception("Debe ingresar un Nombre");
         }
 
         if (apellido == null || apellido.isEmpty()) {
             throw new Exception("Debe ingresar un Apellido");
         }
+       
+        if (username == null || username.isEmpty()) {
+            throw new Exception("Debe ingresar un nombre de usuario");
+        }
 
-        if (celular == null) {
+        if (celular == null|| celular.isEmpty()) {
             throw new Exception("Debe ingresar un numero de telefono");
         }
 
@@ -52,9 +56,6 @@ public class UsuarioServicio {
             throw new Exception("Debe ingresar una direccion");
         }
 
-        if (username == null || username.isEmpty()) {
-            throw new Exception("Debe ingresar un nombre de usuario");
-        }
 
         if (password == null || password.isEmpty()) {
             throw new Exception("Debe ingresar una clave de usuario");

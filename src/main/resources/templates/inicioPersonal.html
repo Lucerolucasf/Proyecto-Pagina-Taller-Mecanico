@@ -1,236 +1,38 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-
-              TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+        <link href="stylesV.css" rel="stylesheet" type="text/css">
 
-    <link href="stylesV.css" rel="stylesheet" type="text/css">
-
-    <title>Inicio</title>
-</head>
+        <title>Inicio</title>
+    </head>
 
 
-<body>
+    <body>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-
-    DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-
-    ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
-
-    <a th:href="@{/logout}" class="btn btn-primary floatR">cerrar sesion</a>
-<!--    <p class="floatR" th:text="${session.usuariosession.nombre}">PERSONAL ACTIVO</p>-->
-    <br>
-    <br>
-
-    <!-- NAV -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <!--        <a th:href="@{/logout}" class="btn btn-primary floatR">cerrar sesion</a>-->
+        <!--    <p class="floatR" th:text="${session.usuariosession.nombre}">PERSONAL ACTIVO</p>-->
 
 
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="nuevo" role="button" data-toggle="dropdown" aria-expanded="false">
-                            NUEVO
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#" data-toggle="modal" data-target="#nuevoCliente">Cliente</a></li>
-                            <li><a class="dropdown-item" href="#" data-toggle="modal" data-target="#nuevoVehiculo">Vehiculo</a></li>
-
-                        </ul>
-                    </li>
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="nuevo" role="button" data-toggle="dropdown" aria-expanded="false">
-                            BUSCAR
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#" data-toggle="modal" data-target="#buscarCliente">Cliente</a></li>
-                            <li><a class="dropdown-item" href="#" data-toggle="modal" data-target="#buscarVehiculo">Vehiculo</a></li>
-
-                        </ul>
-                    </li>
-
-                </ul>
-
-            </div>
-        </div>
-    </nav>
-
-    <!-- Modal NUEVO CLIENTE -->
-    <p th:if="${Error!=null}" th:text="${Error}">
-    <p th:if="${Exito!=null}" th:text="${Exito}">
+        <!-- NAV  CON MODAL-->
+        <div th:include="fragment::nav"> </div>
         
-    <div class="modal fade" id="nuevoCliente" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Nuevo Cliente</h5>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-                </div>
-                
-                <!-- AGREGAR ACTION y CORROBORAR NOMBRE DE VARIABLES-->
-                <form th:action="@{/usuario/form}" method="POST">
-                    <div class="modal-body">
+        <!--MENSAJES-->
+        <div>
+            <p th:if="${Error!=null}" th:text="${Error}" class="bg-danger"></p>
+            <p th:if="${Exito!=null}" th:text="${Exito}" class="bg-suscces"></p>
 
-                        <div class="mb-3">
-                            <label for="formGroupExampleInput" class="form-label">Nombre</label>
-                            <input autocomplete="off" class="form-control" id="formGroupExampleInput" placeholder="nombre" name="nombre">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="formGroupExampleInput" class="form-label">Apellido</label>
-                            <input autocomplete="off" class="form-control" id="formGroupExampleInput" placeholder="apellido" name="apellido">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="formGroupExampleInput" class="form-label">DNI</label>
-                            <input autocomplete="off" class="form-control" id="formGroupExampleInput" placeholder="dni" name="dni">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="formGroupExampleInput" class="form-label">Celular</label>
-                            <input autocomplete="off" class="form-control" id="formGroupExampleInput" placeholder="celular" name="celular">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="formGroupExampleInput" class="form-label">Direccion</label>
-                            <input autocomplete="off" class="form-control" id="formGroupExampleInput" placeholder="direccion" name="direccion">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="formGroupExampleInput" class="form-label">Password</label>
-                            <input autocomplete="off" class="form-control" id="formGroupExampleInput" placeholder="password" name="password">
-                        </div>
-
-                    </div>
-
-                    <!-- alta es por defecto TRUE y EnumROL por defecto es CLIENTE-->
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="btn btn-primary">Guardar</button>
-                    </div>
-                </form>
-            </div>
+            <p th:if="${vacio!=null}" th:text="${vacio}" class=" text-white bg-danger"></p>    
         </div>
-    </div>
+       
 
-    <!-- Modal NUEVO VEHICULO -->
-    <div class="modal fade" id="nuevoVehiculo" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Nuevo Vehiculo</h5>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <!-- AGREGAR ACTION y CORROBORAR NOMBRE DE VARIABLES-->
-                <form>
-                    <div class="modal-body">
-
-                        <div class="mb-3">
-                            <label for="formGroupExampleInput" class="form-label">Patente</label>
-                            <input autocomplete="off" class="form-control" id="formGroupExampleInput" placeholder="patente" name="patente">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="formGroupExampleInput" class="form-label">Modelo</label>
-                            <input autocomplete="off" class="form-control" id="formGroupExampleInput" placeholder="modelo" name="modelo">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="formGroupExampleInput" class="form-label">Marca</label>
-                            <input autocomplete="off" class="form-control" id="formGroupExampleInput" placeholder="apellido" name="apellido">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="formGroupExampleInput" class="form-label">Año</label>
-                            <input autocomplete="off" class="form-control" id="formGroupExampleInput" placeholder="año" name="anio">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="formGroupExampleInput" class="form-label">Kilometraje</label>
-                            <input autocomplete="off" class="form-control" id="formGroupExampleInput" placeholder="kilometraje" name="km">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="formGroupExampleInput" class="form-label">Cliente</label>
-                            <select class="form-control" name="idUsuario">
-                                <!-- VERIFICAR LISTA EN BACK-->
-                                <option th:each="usuario: ${usuarios}" th:value="${usuario.id}"
-                                    th:text="${usuario.nombre}" ></option>
-                            </select>
-                        </div>
-
-                        <!-- alta es por defecto TRUE y EnumEstado por defecto es EN_ESPERA-->
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="btn btn-primary">Guardar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal BUSCAR CLIENTE -->
-    <div class="modal fade" id="buscarCliente" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Ingrese nombre</h5>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-                </div>
-
-                <!--MODIFICAR EL ACTION y SEARCH-->
-                <form th:action="@{/buscador}" method="POST" class="d-flex">
-                    <div class="modal-body">
-
-                        <input class="form-control" type="search" placeholder="nombre" aria-label="Search" name="searchCliente" autocomplete="off">
-
-                    </div>
-
-                    <div class="modal-footer">
-                        <button class="btn btn-outline-success" type="submit">Buscar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal BUSCAR VEHICULO -->
-    <div class="modal fade" id="buscarVehiculo" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Ingrese patente</h5>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <!--MODIFICAR EL ACTION y SEARCH-->
-                <form th:action="@{/buscador}" method="POST" class="d-flex">
-                    <div class="modal-body">
-
-                        <input class="form-control" type="search" placeholder="patente" aria-label="Search" name="searchAuto" autocomplete="off">
-
-                    </div>
-
-                    <div class="modal-footer">
-                        <button class="btn btn-outline-success" type="submit">Buscar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-
-</body>
+    </body>
 
 </html>
