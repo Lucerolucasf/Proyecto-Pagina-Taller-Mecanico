@@ -1,149 +1,29 @@
-
-/* index */
-
-body {
-    font-family: 'Roboto', sans-serif;
-    display: flexbox;
-    background-color: rgb(93, 187, 155);
+.body{
+    background-color: rgb(73, 69, 69);
 }
 
-.button-iniciarSesion {
+li h2{
+    color: rgb(214, 214, 9);
+}
+
+.header{
+    background-color: rgb(172, 162, 162);
+}
+
+.header div{
     float: right;
-    padding: 5px;
-    margin: 5px;
 }
 
-.button-iniciarSesion button {
-    margin: 5px;
-    padding-top: 5px;
+.header button{
+    margin-top: 5px;
+    margin-right: 5px;
 }
 
-.modal-content {
-    background-color: antiquewhite;
-}
-
-.barra-opciones {
-    list-style: none;
-    background-color: gray;
-}
-
-.barra-opciones li {
-    display: inline-block;
-    color: black;
-}
-
-header h3.header-queHacemos {
-    background-color: black;
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 100px;
-
-}
-
-div h3 {
-    background-color: black;
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 100px;
-    text-align: center;
-    color: white;
-}
-
-.header-personal p {
-    color: white;
-}
-
-ul.nav {
-    margin-left: 26%;
+.modal-body{
     display: inline;
-    display: flexbox;
-    display: inline-flexbox;
+    align-content: center;
 }
 
-li.nav-item a:hover {
-    background-color: rgb(27, 23, 250);
-    color: white;
+.button-iniciarSesion button{
+    align-content: center;
 }
-
-div.personal p {
-    color: white;
-}
-
-header {
-    color: rgb(241, 240, 240);
-}
-
-header h3 {
-    text-align: center;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-}
-
-footer {
-    background-color: rgb(14, 13, 13);
-    color: white;
-    display: flexbox;
-}
-
-.footer {
-    list-style: none;
-}
-
-.footer ul {
-    display: inline-block;
-}
-
-/* presupuesto */
-
-body.header-presupuesto {
-    background-color: rgb(85, 84, 84);
-    padding: 0px;
-    margin: 0px;
-}
-
-
-/* barra header */
-
-.presupuesto-barra-opciones{
-    margin: auto;
-    width: 500px;
-    font-family: Arial, Helvetica, sans-serif, sans-serif;
-}
-
-.presupuesto-barra-opciones li{
-    display: inline-block;
-}
-
-.presupuesto li{
-    display: inline;
-}
-
-ul, li{
-    list-style: none;
-}
-
-.presupuesto-barra-opciones li a{
-    background-color: black ;
-    color: white;
-    text-decoration: none;
-    padding: 10px 15px;
-    display: block;
-}
-
-.presupuesto-barra-opciones li a:hover{
-    background-color: #434343;
-}
-
-.presupuesto-barra-opciones > li{
-    display: inline-block;    
-}
-
-.presupuesto-barra-opciones li ul{
-    display: none;
-    position: absolute;
-    min-width: 140px;
-}
-
-.presupuesto-barra-opciones li:hover > ul{
-    display: block;
-}
-
-
-

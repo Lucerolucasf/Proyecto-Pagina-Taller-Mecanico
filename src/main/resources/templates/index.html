@@ -10,171 +10,84 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
+
     <title>index</title>
 
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
 
-    </div>
 
 </head>
 
-<body>
+<body class="body">
+    <header class="header">
 
-    <!-- boton inicio de sesion -->
+        <div class="button-iniciarSesion">
 
-    <div class="button-iniciarSesion">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#miModal">
+                Iniciar sesion
+            </button>
+        </div>
+        <!-- NAV BARRA SUPERIOR -->
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <h2>TALLEREGGS</h2>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button"
+                    aria-expanded="false">Cliente</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Crear cliente</a></li>
+                    <li><a class="dropdown-item" href="#">Mostrar Cliente</a></li>
+                </ul>
+            </li>
+            
+            <a class="nav-link" href="/presupuesto">Presupuesto</a>
+                
+        </ul>
+        
+        <!--  modal -->
 
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#miModal">
-            Iniciar sesion
-        </button>
-    </div>
-    <!--  modal -->
+        <div class="modal fade" id="miModal" tabindex="-1" aria-hidden="true" aria-labelledby="modalTitle">
+            <div class="modal-dialog">
+                <div class="modal-content">
 
+                    <div class="modal-header">
 
-    <div class="modal fade" id="miModal" tabindex="-1" aria-hidden="true" aria-labelledby="modalTitle">
-        <div class="modal-dialog">
-            <div class="modal-content">
+                        <h5 class="modal-title" id="modalTitle">Inicio de Sesion</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
 
-                <div class="modal-header">
+                    </div>
 
-                    <h5 class="modal-title" id="modalTitle">Inicio de Sesion</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+                    <div class="modal-body">
 
-                </div>
+                        <form>
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="exampleInputPassword1">
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Email address</label>
+                                <input type="email" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp">
+                            </div>
 
-                <div class="modal-body">
+                    </div>
 
-                    <form>
-                        <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Email address</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1"
-                                aria-describedby="emailHelp">
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1">
-                        </div>
+                    <div class="modal-footer">
+
+                        <button type="submit" class="btn btn-primary"> Iniciar Sesion</button>
+
+                    </div>
+
                     </form>
-
-                </div>
-
-                <div class="modal-footer">
-
-                    <button type="button" class="btn btn-primary"> Iniciar Sesion</button>
-
                 </div>
             </div>
-        </div>
-
-    </div>
-
-    <br>
-    <br>
-    <br>
-
-
-    <!--barra de opciones-->
-
-
-    <div class="barra-opciones">
-        <ul class="nav">
-
-            <li class="nav-item" >
-                <a class="nav-link active" aria-current="page" href="">Inicio</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#queHacemos">Que Hacemos</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#personal">Personal</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#nosotros">Nosotros</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="contactanos">Contactanos</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="presupuesto.html" target="_blank">Presupuesto</a>
-            </li>
-
-        </ul>
-    </div>
-
-    <br>
-
-        
-
-    <main>
-
-        <header class="queHacemos">
-            <h3 class="header-queHacemos">Que Hacemos </h3>
-
-            <p> En Taller Eggs ofrecemos servicios de calidad en todo lo relacionado con:
-
-            <ul>
-
-                <li>Inyección electrónica.</li>
-                <li>Afinación de motores.</li>
-                <li>Diagnóstico computarizado.</li>
-
-            </ul>
-
-            Además, en nuestro taller mecánico nos especializamos en Ford, Volkswagen, Audi y Seat. Llámenos o
-            visítenos
-            ahora mismo para atenderlo de forma personalizada.
-
-            </p>
-
-        </header>
-    </main>
-
-    <div class="personal">
-
-        <h3 class="header-personal">Personal</h3>
-
-        <p class="">
-            Profesionalismo y seriedad <br>
-            Nuestros servicios <br>
-            Nos destacamos por ofrecer servicios de calidad y a muy buenos precios. Además, brindamos servicios
-            mecánicos para diversas marcas como Ford, Volkswagen, Audi y Seat.
-
-            No dude en visitar nuestro taller mecánico cada vez que lo requiera para atenderlo como usted se lo
-            merece.
-            Lo esperamos pronto en Córdoba.
-        </p>
-
-    </div>
-
-    <footer>
-        <div class="footer">
-
-            <ul class="nombre">
-                <li>
-                    TallerEggs
-                </li>
-            </ul>
-
-            <ul class="telefono">
-                <li>
-                    Tell: 351 2115144
-                </li>
-            </ul>
-
-            <ul class="instagram">
-                <li>
-                    Instagram: TalllerEggs
-                </li>
-            </ul>
 
         </div>
 
-    </footer>
-
+    </header>
 
 </body>
 
