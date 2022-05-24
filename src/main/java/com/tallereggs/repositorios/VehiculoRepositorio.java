@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface VehiculoRepositorio extends JpaRepository<Vehiculo, String>{
 
-    @Query("SELECT v FROM Vehiculo v WHERE v.patente = :patente")
+    @Query("SELECT v FROM Vehiculo v WHERE v.patente LIKE %:patente% ")
     public List<Vehiculo> buscarPorPatente(@Param("patente")String patente);
     
     

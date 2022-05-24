@@ -1,9 +1,11 @@
-
 package com.tallereggs.controladores;
 
+import com.tallereggs.entidades.Usuario;
 import com.tallereggs.entidades.Vehiculo;
 import com.tallereggs.enums.EnumEstado;
+import com.tallereggs.servicios.UsuarioServicio;
 import com.tallereggs.servicios.VehiculoServicio;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -14,44 +16,47 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@Controller 
+@Controller
 @RequestMapping("/")
 public class VehiculoControlador {
-    
+
     @Autowired
-    private VehiculoServicio vehiculoServicio; 
-    
+    private VehiculoServicio vehiculoServicio;
+
+    @Autowired
+    private UsuarioServicio usuarioServicio;
+
     @PostMapping("/registrarVehiculo")
-    public String registrarVehiculo(ModelMap model, @RequestParam String patente, @RequestParam String modelo, @RequestParam String marca, @RequestParam String anio, @RequestParam String km, @RequestParam String idUsuario, @RequestParam MultipartFile archivo, @RequestParam EnumEstado estado) {
+    public String registrarVehiculo(ModelMap model, RedirectAttributes attr, @RequestParam String patente, @RequestParam String modelo, @RequestParam String marca, @RequestParam String anio, @RequestParam String km, @RequestParam String idUsuario, @RequestParam MultipartFile archivo) {
         try {
             vehiculoServicio.crear(patente, modelo, marca, anio, km, idUsuario, archivo, EnumEstado.EN_ESPERA);
-            
+            attr.addFlashAttribute("Exito", "El patente '" + patente + "' se cargó exitosamente.");
         } catch (Exception ex) {
 
-            model.put("error", ex.getMessage());
-            
-            model.put("patente", patente);
-            model.put("String", modelo);
-            model.put("String", marca);
-            model.put("anio", anio);
-            model.put("km", km);
-            model.put("idUsuario", idUsuario);
-            model.put("archivo", archivo);
-            model.put("estado", estado); //estado no se si iría en este método
-            
-            
-            return "registro.html"; 
-        }
+            attr.addFlashAttribute("Error", ex.getMessage());
 
-        return "index.html";
+            attr.addFlashAttribute("patente", patente);
+            attr.addFlashAttribute("String", modelo);
+            attr.addFlashAttribute("String", marca);
+            attr.addFlashAttribute("anio", anio);
+            attr.addFlashAttribute("km", km);
+            attr.addFlashAttribute("idUsuario", idUsuario);
+            attr.addFlashAttribute("archivo", archivo);
+
+        }
+       
+        List<Usuario> usuarios = usuarioServicio.listarUsuarios();
+        attr.addFlashAttribute("usuarios", usuarios);
+
+        return "redirect:/inicioPersonal";
 
     }
-    
-    @PostMapping("/editarVehiculo")
+
+       @PostMapping("/editarVehiculo")
     public String editarVehiculo(RedirectAttributes attr, @RequestParam() String id, @RequestParam String patente, @RequestParam String modelo, @RequestParam String marca, @RequestParam String anio, @RequestParam String km, @RequestParam String idUsuario, @RequestParam MultipartFile archivo, @RequestParam EnumEstado estado) {
 
         try {
-            vehiculoServicio.actualizar(id, patente, modelo, marca, anio,km, idUsuario, archivo, estado);
+            vehiculoServicio.actualizar(id, patente, modelo, marca, anio, km, idUsuario, archivo, estado);
             attr.addFlashAttribute("actualizado", "El vehículo se actualizó correctamente");
 
         } catch (Exception ex) {
@@ -60,15 +65,45 @@ public class VehiculoControlador {
 
         return "redirect:/vehiculos";
     }
-    
+
     @GetMapping("/vehiculos")
-    public String vehiculos(ModelMap model, RedirectAttributes attr,@RequestParam(required = false) String search) {
+    public String vehiculos(ModelMap model, RedirectAttributes attr, @RequestParam(required = false) String search) {
         List<Vehiculo> vehiculos;
 
         vehiculos = (List<Vehiculo>) vehiculoServicio.buscarPorPatente(search);
-        
-        return "vehiculos.html"; 
-        
+
+        return "vehiculos.html";
+
     }
+
     
+ ////modificacion del front////
+   
+
+    @PostMapping("/buscadorAuto")
+    public String buscador(ModelMap modelo, RedirectAttributes attr, @RequestParam(required = false) String searchAuto) {
+
+        if (searchAuto != null) {
+            attr.addAttribute("searchAuto", searchAuto);
+        }
+        
+        return "redirect:/searchAuto";
+    }
+
+    @GetMapping("/searchAuto")
+    public String searchAuto(ModelMap modelo, RedirectAttributes attr, @RequestParam(required = false) String searchAuto) {
+        List<Vehiculo> vehiculos;
+        vehiculos = vehiculoServicio.buscarPorPatente(searchAuto);
+
+        if (vehiculos == null || vehiculos.isEmpty()) {
+            modelo.put("vacio", searchAuto + " no se encontro en la base de datos");
+            return "inicioPersonal.html";
+        }
+        modelo.put("searchAuto", searchAuto);
+        modelo.put("vehiculos", vehiculos);
+
+        return "search.html";
+    }
+
+
 }

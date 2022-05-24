@@ -21,7 +21,9 @@ public class Usuario {
     private String celular;
     private String direccion;
     private Boolean alta;
+
     private String username;
+    
     private String password;
     
     @Enumerated(EnumType.STRING)
