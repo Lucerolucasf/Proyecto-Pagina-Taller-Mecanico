@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Crear Presupuesto</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+
+        <section class="crearPresupuesto">
+            <h3 th:if="${exito != null}" th:text="${exito}" class="exito" ></h3>
+            <h3 thif="${error != null}" th:text="${error}" class = "error"></h3>
+            <h4>Crear Presupuesto</h4>
+            <form th:action="@{crearPresupuesto}" method="POST">
+                <input type="text" name="nombre" id="nombre" placeholder="ingrese el tipo del vehiculo" >
+
+                <div class="botones">
+                    <input id="guardar" type="submit" value="guardar">
+                    <input id="volver" type="submit" value="volver" href="/presupuesto">
+                </div>
+            </form>
+        </section>
+
+    </body>
+</html>

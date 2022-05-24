@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link rel="stylesheet" href="style.css">
+
+        <title>index</title>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+
+    </head>
+
+    <body class="body">
+        <header class="header">
+            <!-- NAV BARRA SUPERIOR -->
+            <ul class="nav nav-pills">
+                <li class="nav-item">
+                    <h2>TALLEREGGS</h2>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="/">Inicio</a>
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                       aria-expanded="false">Presupuesto</a>
+                    <ul class="dropdown-menu">
+                        <li><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#miModalPresupuesto"><a  class="dropdown-item">Crear Presupuesto</a></button></li>
+                        <li><a class="dropdown-item" href="presupuesto/listarPresupuestos">Mostrar Presupuesto</a></li>
+                        <li><a class="dropdown-item" href="#">Editar Presupuesto</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <!--  modal presupuesto -->
+
+            <div class="modal fade" id="miModalPresupuesto" tabindex="-1" aria-hidden="true" aria-labelledby="modalTitle">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+
+                            <h5 class="modal-title" id="modalTitle">Cargar Presupuesto</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+
+                        </div>
+
+                        <div class="modal-body">
+
+                            <form th:action="@{/presupuesto/form}" method="POST">
+                                <div class="mb-3">
+                                    <label for="exampleInputPassword1" class="form-label">Vehiculo</label>
+                                    <input type="text" class="form-control" id="exampleInputvehiculo" name="idVehiculo">
+
+                                    <label for="exampleInputEmail1" class="form-label">Usuario</label>
+                                    <input type="text" class="form-control" id="exampleInputUsuario" name="usuario">
+
+                                    <label for="exampleInputEmail1" class="form-label">Detalle</label>
+                                    <input type="text" class="form-control" id="exampleInputFalla" name="fallaDescripcion">
+
+                                    <label for="exampleFormControlTextarea1" class="form-label">total</label>
+                                    <input type="number" class="form-control" id="exampleInputTotal"sss name="total">
+
+                                </div>
+
+                        </div>
+
+                        <div class="modal-footer">
+
+                            <button type="submit" class="btn btn-primary"> Guardar Presupuesto </button>
+
+                        </div>
+
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+        </header>
+        <h3 th:if="${exito != null}" th:text="${exito}" class="exito" ></h3>
+        <h3 thif="${error != null}" th:text="${error}" class = "error"></h3>
+    </body>
+
+</html>
