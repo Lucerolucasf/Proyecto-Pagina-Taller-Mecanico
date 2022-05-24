@@ -25,7 +25,18 @@ public class PresupuestoControlador {
     @Autowired
     private PresupuestoServicio presupuestoServicio;
     
-    //Método para visualizar los detalles del presupuesto
+
+    
+    @GetMapping
+    public String menuPresupuesto(){
+        
+        return "presupuesto.html";
+    }
+    
+//Método para visualizar los detalles del presupuesto
+    
+    
+
     @GetMapping("/form")
     public String form(ModelMap modelo){
         
@@ -33,12 +44,15 @@ public class PresupuestoControlador {
         modelo.put("detallesPresupuesto", detallesPresupuesto);
         
       
-        return "AdministrarPresupuesto.html";
+        return "presupuesto.html";
         
     }
+    
     //Método para crear los presupuestos
+    
     @PostMapping("/form")
-    public String crear(RedirectAttributes attr, @RequestParam String idVehiculo, @RequestParam String idUsuario, @RequestParam String fallaDescripcion, @RequestParam Float total){
+    public String crear(RedirectAttributes attr, @RequestParam String idVehiculo, String idUsuario, @RequestParam String fallaDescripcion,Float total){
+
         
         try {
             presupuestoServicio.agregar(idVehiculo, idUsuario, fallaDescripcion, total);
@@ -47,19 +61,23 @@ public class PresupuestoControlador {
            attr.addFlashAttribute("error", ex.getMessage());
         }
         
-        return "redirect:/form";
+        return "redirect:/presupuesto";
     }
     
     //Método para listar todos los presupuestos
-    @GetMapping("/lista")
+    
+    @GetMapping("/listarPresupuestos")
+
     public String listar(ModelMap modelo){
         List<Presupuesto> presupuestos = presupuestoServicio.listarTodos();
         modelo.put("presupuestos", presupuestos);
         
-        return "ListaPresupuestos.html";
+        return "listarPresupuestos.html";
     }
     
     //Método para modificar presupuesto
+    
+
     @GetMapping("/modificar/{id}")
     public String editar(ModelMap modelo, @PathVariable String id){
         
@@ -72,7 +90,8 @@ public class PresupuestoControlador {
           
         }
         
-        return "EditarPresupuesto.html";
+        return "editarPresupuesto.html";
+
     }
     
     //Método para modificar en base de datos un presupuesto
@@ -86,7 +105,8 @@ public class PresupuestoControlador {
            attr.addFlashAttribute("error", ex.getMessage());
         }
         
-        return "redirect:/lista";
+        return "redirect:/presupuesto/lista";
+
     }
     
     @GetMapping("/eliminar/{id}")
@@ -100,9 +120,9 @@ public class PresupuestoControlador {
             attr.addFlashAttribute("error", ex.getMessage());
         }
             
-            return "redirect:/lista";
+            return "redirect:presupuesto/lista";
     }
     
-    
-    
+        
 }
+
