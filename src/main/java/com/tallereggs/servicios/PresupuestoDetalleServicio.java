@@ -74,10 +74,12 @@ public class PresupuestoDetalleServicio {
         Float sumaTotal = 0f;
         List<PresupuestoDetalle> detallesPresupuesto = listaDeDetallesPorPresupuestoId (id);
         for (PresupuestoDetalle aux : detallesPresupuesto) {
-            sumaTotal =+ (aux.getPrecio() * aux.getCantidad());
+            sumaTotal += (aux.getPrecio() * aux.getCantidad());
             }
         return sumaTotal; 
     }
+    
+  
     
     //Método para buscar los detalles de presupuesto por id de presupuesto.
     @Transactional(readOnly = true)

@@ -24,10 +24,10 @@ public class UsuarioControlador {
     }
 
     @PostMapping("/usuario/form")
-    public String crearUsuario(ModelMap modelo, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String celular, @RequestParam String direccion, @RequestParam String username, String password) throws Exception {
+    public String crearUsuario(ModelMap modelo, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String celular, @RequestParam String direccion, @RequestParam String username, String password, String confirmarPassword) throws Exception {
 
         try {
-            usuarioServicio.crear(nombre, apellido, celular, direccion, username, password, EnumROL.CLIENTE);
+            usuarioServicio.crear(nombre, apellido, celular, direccion, username, password, confirmarPassword, EnumROL.CLIENTE);
             modelo.put("Exito", "El usuario '" + username + "' se cargó exitosamente.");
         } catch (Exception e) {
             modelo.put("Error", e.getMessage());

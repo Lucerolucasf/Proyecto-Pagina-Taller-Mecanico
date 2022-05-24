@@ -3,20 +3,31 @@ package com.tallereggs.servicios;
 import com.tallereggs.entidades.Usuario;
 import com.tallereggs.enums.EnumROL;
 import com.tallereggs.repositorios.UsuarioRepositorio;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 @Service
-public class UsuarioServicio {
+public class UsuarioServicio implements UserDetailsService{
 
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
 
     @Transactional(rollbackFor = {Exception.class})
-    public Usuario crear(String nombre, String apellido, String celular, String direccion, String username, String password, EnumROL ROL) throws Exception {
+    public Usuario crear(String nombre, String apellido, String celular, String direccion, String username, String password, String confirmarPassword, EnumROL ROL) throws Exception {
 
         validar(nombre, apellido, celular, direccion, username, password);
         Usuario usuario = new Usuario(); // nuevo usuario 
@@ -26,8 +37,11 @@ public class UsuarioServicio {
         usuario.setCelular(celular);
         usuario.setDireccion(direccion);
         usuario.setUsername(username);
-        usuario.setPassword(password);
-        usuario.setROL(EnumROL.CLIENTE);
+        
+        String passwordEncriptado = new BCryptPasswordEncoder().encode(password);
+        
+        usuario.setPassword(passwordEncriptado);
+        usuario.setROL(EnumROL.ADMIN);
         usuario.setAlta(Boolean.TRUE);
 
         return usuarioRepositorio.save(usuario);
@@ -56,8 +70,8 @@ public class UsuarioServicio {
             throw new Exception("Debe ingresar un nombre de usuario");
         }
 
-        List<Usuario> usuarios = buscarPorUsername(username);
-        if (!usuarios.isEmpty()) {
+        Usuario usuarios = buscarPorUsername(username);
+        if (usuarios != null) {
             throw new Exception("El nombre de usuario ya existe");
         }
 
@@ -122,9 +136,9 @@ public class UsuarioServicio {
     }
 
     @Transactional(readOnly = true)
-    public List<Usuario> buscarPorUsername(String username) {
+    public Usuario buscarPorUsername(String username) {
 
-        List<Usuario> usuario = usuarioRepositorio.buscarPorUsername(username);
+        Usuario usuario = usuarioRepositorio.buscarPorUsername(username);
 
         return usuario;
 
@@ -195,6 +209,44 @@ public class UsuarioServicio {
 
         return usuarioRepositorio.save(usuario);
 
+    }
+    
+//    @Transactional(rollbackFor = Exception.class)
+//    public void save(String username, String password, String confirmarPassword){
+//        
+//        Usuario usuario = new Usuario();
+//        
+//        usuario.setUsername(username);
+//        
+//        String passwordEncriptado = new BCryptPasswordEncoder().encode(password);
+//        usuario.setPassword(passwordEncriptado);
+//        
+//        usuario.setROL(EnumROL.ADMIN);
+//        
+//        usuarioRepositorio.save(usuario);
+//    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+       
+        Usuario u = usuarioRepositorio.buscarPorUsername(username);
+        
+        if(u == null){
+            return null;
+        }
+        
+        List<GrantedAuthority> permisos = new ArrayList<>();
+        
+        GrantedAuthority p1 = new SimpleGrantedAuthority ("ROLE_" + u.getROL().toString());
+        permisos.add(p1);
+        
+        ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        
+        HttpSession session = attr.getRequest().getSession(true);
+        session.setAttribute("usuariosession", u);
+        
+        return new User(u.getUsername(), u.getPassword(), permisos);
+        
     }
 
 }
