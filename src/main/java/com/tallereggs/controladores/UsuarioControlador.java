@@ -34,11 +34,13 @@ public class UsuarioControlador {
     }
     
     @PostMapping("/usuario/form")
+
     public String crearUsuario(RedirectAttributes attr, ModelMap modelo, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String celular, @RequestParam String direccion, @RequestParam(required = false) String username, String password) throws Exception {
 
         try {
-            usuarioServicio.crear(nombre, apellido, celular, direccion, username, password, EnumROL.CLIENTE);
+            usuarioServicio.crear(nombre, apellido, celular, direccion, username, password);
             attr.addFlashAttribute("Exito", "El usuario '" + username + "' se cargó exitosamente.");
+
         } catch (Exception e) {
             attr.addFlashAttribute("Error", e.getMessage());
 

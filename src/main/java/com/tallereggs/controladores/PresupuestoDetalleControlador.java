@@ -52,7 +52,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
         List<PresupuestoDetalle> presupuestosDetalle =  presupuestoDetalleServicio.listaDeDetallesPorPresupuestoId(idPresupuesto);
         modelo.put("presupuestosDetalle", presupuestosDetalle);
 
-      Float total = presupuestoDetalleServicio.sumarPrecios(idPresupuesto);
+        Float total = presupuestoDetalleServicio.sumarPrecios(idPresupuesto);
         modelo.put("total", total);
 
         return "ListaPresupuestoDetallePorPresupuestoId.html";
@@ -90,6 +90,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
         }
         return "redirect:/lista";
     }
+    
+    
     
 }
     

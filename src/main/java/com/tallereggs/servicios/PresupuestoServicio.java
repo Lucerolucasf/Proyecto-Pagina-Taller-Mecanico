@@ -102,19 +102,7 @@ public class PresupuestoServicio {
         return presupuestosDetalle;
         
     }
-       //Averiguar como traer todos los detalles a un presupuesto en particular. CONSULTAR!!!!!!!!!
-//    @Transactional(readOnly = true)
-//    public Presupuesto listarDetallesEnPresupuesto(String id) throws ErrorServicio{
-//         if(id == null || id.isEmpty()){
-//            throw new ErrorServicio("Ingrese un id válido.");
-//        }
-//        //buscar todos los presupuestosDetalles
-//        List<PresupuestoDetalle> presupuestosDetalle = presupuestoDetalleRepositorio.buscarPresupuestoDetallePorPresupuesto(id);
-//       
-//        return 
-//        
-//    }
-        
+
     
     //Método para listar todos los presupuestos
     @Transactional(readOnly = true)
