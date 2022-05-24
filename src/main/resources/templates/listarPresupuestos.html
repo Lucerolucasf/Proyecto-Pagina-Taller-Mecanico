@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+
+        <table class="table">
+
+            <thead>
+                <tr>
+                    <th scope="col">id</th>
+                    <th scope="col">Vehiculo</th>
+                    <th scope="col">Usuario</th>
+                    <th scope="col">Falla</th>
+                    <th scope="col">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr th:each = "presupuesto:${presupuestos}" >
+                    <td scope="row" th:text="${presupuestos.id}" ></td>
+                    <td scope="row" th:text="${presupuestos.usuario}" ></td>
+                    <td scope="row" th:text="${presupuestos.fallaDescripcion}" ></td>
+                    <td scope="row" th:text="${presupuestosDetalle.detalle}" ></td>
+                    <td scope="row" th:text="${presupuestosDetalle.cantidad}" ></td>
+                    <td scope="row" th:text="${presupuestosDetalle.precio}" ></td>
+                    <td scope="row" th:text=${total}" 
+                        <a th:href="@{/presupuesto/editar/} + ${presupuesto.id}"><button>Editar</button></a>
+                    </td>
+                    <td>
+                        <a th:href="@{/presupuesto/editar/} + ${presupuesto.id}"><button>Eliminar</button></a>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </body>
+</html>

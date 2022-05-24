@@ -51,8 +51,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
     public String listaPorIdPresupuesto(ModelMap modelo,@PathVariable String idPresupuesto){
         List<PresupuestoDetalle> presupuestosDetalle =  presupuestoDetalleServicio.listaDeDetallesPorPresupuestoId(idPresupuesto);
         modelo.put("presupuestosDetalle", presupuestosDetalle);
+
         Float total = presupuestoDetalleServicio.sumarPrecios(idPresupuesto);
         modelo.put("total", total);
+
         return "ListaPresupuestoDetallePorPresupuestoId.html";
     }
     

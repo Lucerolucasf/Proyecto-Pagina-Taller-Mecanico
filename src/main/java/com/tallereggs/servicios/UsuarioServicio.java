@@ -27,7 +27,7 @@ public class UsuarioServicio implements UserDetailsService{
     private UsuarioRepositorio usuarioRepositorio;
 
     @Transactional(rollbackFor = {Exception.class})
-    public Usuario crear(String nombre, String apellido, String celular, String direccion, String username, String password, String confirmarPassword, EnumROL ROL) throws Exception {
+    public Usuario crear(String nombre, String apellido, String celular, String direccion, String username, String password) throws Exception {
 
         validar(nombre, apellido, celular, direccion, username, password);
         Usuario usuario = new Usuario(); // nuevo usuario 
@@ -41,7 +41,7 @@ public class UsuarioServicio implements UserDetailsService{
         String passwordEncriptado = new BCryptPasswordEncoder().encode(password);
         
         usuario.setPassword(passwordEncriptado);
-        usuario.setROL(EnumROL.ADMIN);
+        usuario.setROL(EnumROL.CLIENTE);
         usuario.setAlta(Boolean.TRUE);
 
         return usuarioRepositorio.save(usuario);
@@ -50,15 +50,19 @@ public class UsuarioServicio implements UserDetailsService{
 
     public void validar(String nombre, String apellido, String celular, String direccion, String username, String password) throws Exception {
 
-        if (nombre == null) {
+        if (nombre == null || nombre.isEmpty()) {
             throw new Exception("Debe ingresar un Nombre");
         }
 
         if (apellido == null || apellido.isEmpty()) {
             throw new Exception("Debe ingresar un Apellido");
         }
+       
+        if (username == null || username.isEmpty()) {
+            throw new Exception("Debe ingresar un nombre de usuario");
+        }
 
-        if (celular == null) {
+        if (celular == null|| celular.isEmpty()) {
             throw new Exception("Debe ingresar un numero de telefono");
         }
 
@@ -66,9 +70,7 @@ public class UsuarioServicio implements UserDetailsService{
             throw new Exception("Debe ingresar una direccion");
         }
 
-        if (username == null || username.isEmpty()) {
-            throw new Exception("Debe ingresar un nombre de usuario");
-        }
+
 
         Usuario usuarios = buscarPorUsername(username);
         if (usuarios != null) {
@@ -184,7 +186,9 @@ public class UsuarioServicio implements UserDetailsService{
 
         Usuario u = buscarUsuarioPorId(id);
 
-        if (u.getROL() == EnumROL.PERSONAL) {
+
+        if (u.getROL() ==EnumROL.PERSONAL ) {
+
             System.out.println("El usuario ya fue modificado como personal");
         }
 

@@ -20,6 +20,9 @@ public class PresupuestoServicio {
     @Autowired
     private PresupuestoDetalleRepositorio presupuestoDetalleRepositorio;
     
+//    @Autowired
+//    private PresupuestoDetalleServicio presupuestoDetalleServicio;
+
 
     //Método para agregar presupuestos
     @Transactional(rollbackFor = {Exception.class})
