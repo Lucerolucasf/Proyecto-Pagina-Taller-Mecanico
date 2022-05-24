@@ -50,7 +50,7 @@ and open the template in the editor.
                                 </ul>
                             </li>
 
-                            <li >
+                            <li>
                                 <a class="btn btn-primary " th:href="@{/logout}" >cerrar sesion</a>
                             </li>
                         </ul>
@@ -125,42 +125,46 @@ and open the template in the editor.
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <!-- AGREGAR ACTION y CORROBORAR NOMBRE DE VARIABLES-->
-                        <form>
+                        <form th:action="@{/registrarVehiculo}" method="POST" enctype="multipart/form-data">
                             <div class="modal-body">
 
                                 <div class="mb-3">
                                     <label for="formGroupExampleInput" class="form-label">Patente</label>
-                                    <input autocomplete="off" class="form-control" id="formGroupExampleInput" placeholder="patente" name="patente">
+                                    <input autocomplete="off" class="form-control" id="formGroupExampleInput" placeholder="patente" name="patente" th:value="${patente}">
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="formGroupExampleInput" class="form-label">Modelo</label>
-                                    <input autocomplete="off" class="form-control" id="formGroupExampleInput" placeholder="modelo" name="modelo">
+                                    <input autocomplete="off" class="form-control" id="formGroupExampleInput" placeholder="modelo" name="modelo" th:value="${modelo}">
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="formGroupExampleInput" class="form-label">Marca</label>
-                                    <input autocomplete="off" class="form-control" id="formGroupExampleInput" placeholder="apellido" name="apellido">
+                                    <input autocomplete="off" class="form-control" id="formGroupExampleInput" placeholder="marca" name="marca" th:value="${marca}">
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="formGroupExampleInput" class="form-label">Año</label>
-                                    <input autocomplete="off" class="form-control" id="formGroupExampleInput" placeholder="año" name="anio">
+                                    <input autocomplete="off" class="form-control" id="formGroupExampleInput" placeholder="año" name="anio" th:value="${anio}">
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="formGroupExampleInput" class="form-label">Kilometraje</label>
-                                    <input autocomplete="off" class="form-control" id="formGroupExampleInput" placeholder="kilometraje" name="km">
+                                    <input autocomplete="off" class="form-control" id="formGroupExampleInput" placeholder="kilometraje" name="km" th:value="${km}">
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="formGroupExampleInput" class="form-label">Cliente</label>
-                                    <select class="form-control" name="idUsuario">
                                         <!-- VERIFICAR LISTA EN BACK AGREGARLA EN VEHICULO CONTROLADOR-->
+                                    <select class="form-control" name="idUsuario">
                                         <option th:each="usuario: ${usuarios}" th:value="${usuario.id}" th:text="${usuario.nombre}" ></option>
                                     </select>
                                 </div>
 
+                                <div class="mb-3">
+                                    <label for="formGroupExampleInput" class="form-label">Tarjeta Verde</label>
+                                    <input type="file" class="form-control" name="archivo">
+                                </div>
                                 <!-- alta es por defecto TRUE y EnumEstado por defecto es EN_ESPERA-->
                             </div>
 
@@ -207,7 +211,7 @@ and open the template in the editor.
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <!--MODIFICAR EL ACTION y SEARCH-->
-                        <form th:action="@{/buscador}" method="POST" class="d-flex">
+                        <form th:action="@{/buscadorAuto}" method="POST" class="d-flex">
                             <div class="modal-body">
 
                                 <input class="form-control" type="search" placeholder="patente" aria-label="Search" name="searchAuto" autocomplete="off">

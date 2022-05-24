@@ -23,6 +23,16 @@ public class UsuarioControlador {
         return "inicioPersonal.html";
     }
 
+     @GetMapping("/inicioPersonal")
+    public String inicioPersonal(ModelMap modelo) {
+
+        List<Usuario> usuarios = usuarioServicio.listarUsuarios();
+       modelo.put("usuarios", usuarios);
+
+        return "inicioPersonal.html";
+        
+    }
+    
     @PostMapping("/usuario/form")
     public String crearUsuario(RedirectAttributes attr, ModelMap modelo, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String celular, @RequestParam String direccion, @RequestParam(required = false) String username, String password) throws Exception {
 
@@ -128,11 +138,7 @@ public class UsuarioControlador {
     }
 
     ////modificacion del front////
-    @GetMapping("/inicioPersonal")
-    public String inicioPersonal() {
-
-        return "inicioPersonal.html";
-    }
+   
 
     @PostMapping("/buscador")
     public String buscador(ModelMap modelo, RedirectAttributes attr, @RequestParam(required = false) String searchAuto, @RequestParam(required = false) String searchCliente) {
@@ -144,13 +150,12 @@ public class UsuarioControlador {
             attr.addAttribute("searchCliente", searchCliente);
         }
 
-        return "redirect:/search";
+        return "redirect:/searchUsuario";
     }
 
-    @GetMapping("/search")
-    public String search(ModelMap modelo, RedirectAttributes attr, @RequestParam(required = false) String searchCliente, @RequestParam(required = false) String searchAuto) {
+    @GetMapping("/searchUsuario")
+    public String searchUsuario(ModelMap modelo, RedirectAttributes attr, @RequestParam(required = false) String searchCliente) {
         List<Usuario> usuarios;
-
         usuarios = usuarioServicio.buscarPorNombre(searchCliente);
 
         if (usuarios == null || usuarios.isEmpty()) {

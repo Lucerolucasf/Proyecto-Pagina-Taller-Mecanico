@@ -59,7 +59,7 @@ public class UsuarioServicio {
 
         List<Usuario> usuarios = buscarPorUsername(username);
         if (!usuarios.isEmpty()) {
-            throw new Exception("El nombre de usuario ya existe");
+            throw new Exception("El usuario "+ username + "ya existe");
         }
 
         if (password == null || password.isEmpty()) {

@@ -40,7 +40,7 @@ public class VehiculoServicio {
         vehiculo.setAnio(anio);
         vehiculo.setKm(km);
         vehiculo.setEstado(estado);
-        //vehiculo.setUsuario(usuarioServicio.buscarPorId(idUsuario));
+        vehiculo.setUsuario(usuarioServicio.buscarUsuarioPorId(idUsuario));
         
         TarjetaVerde tv = tarjetaVerdeServicio.guardar(archivo);
         vehiculo.setTv(tv);
@@ -51,7 +51,6 @@ public class VehiculoServicio {
     }
     
         
-    
     
     //Método para validar que los datos ingresados no sean nulos ni vengan vacíos.
     public void validar(String patente, String modelo, String marca, String anio, String km, String idUsuario, MultipartFile archivo, EnumEstado estado) throws Exception {
@@ -84,9 +83,7 @@ public class VehiculoServicio {
             throw new ErrorServicio ("Ingrese una patente válida.");
         }
         
-        Vehiculo vehiculo = new Vehiculo();
-        
-        if (vehiculo.getTv() == null) {
+        if (archivo == null) {
         throw new ErrorServicio ("Ingrese una foto válida.");
         }
         
@@ -108,22 +105,20 @@ public class VehiculoServicio {
             throw new Exception("El vehículo no existe");
         }
 
-        Vehiculo vehiculo = vehiculoServicio.buscarPorId(id);
+        Vehiculo vehiculo =buscarPorId(id);
         
         if (!vehiculo.getAlta()) {
             throw new Exception("El vehiculo está dado de baja");
         }
 
-        vehiculoServicio.validarActualizar(id, patente, modelo, marca, anio, km, idUsuario, archivo, estado);
-        //validarActualizar(id, patente, modelo, marca, anio, km, idUsuario, archivo, estado);
-
-        vehiculo.setId(id);
+        validarActualizar(patente, modelo, marca, anio, km, idUsuario, archivo, estado);
+        
         vehiculo.setPatente(patente);
         vehiculo.setModelo(modelo);
         vehiculo.setMarca(marca);
         vehiculo.setAnio(anio);
         vehiculo.setKm(km);
-        //vehiculo.setUsuario(usuarioServicio.buscarPorId(idUsuario));
+        vehiculo.setUsuario(usuarioServicio.buscarUsuarioPorId(idUsuario));
         vehiculo.setEstado(estado);
 
         String idTarjetaVerde = null;
@@ -205,11 +200,9 @@ public class VehiculoServicio {
     }
 
 
-    public void validarActualizar(String id, String patente, String modelo, String marca, String anio, String km, String idUsuario, MultipartFile tarjetaVerde, EnumEstado estado) throws Exception {
+    public void validarActualizar(String patente, String modelo, String marca, String anio, String km, String idUsuario, MultipartFile tarjetaVerde, EnumEstado estado) throws Exception {
 
-        if (id == null) {
-            throw new Exception("Debe ingresar un id");
-        }
+        
 
         if (patente == null || patente.isEmpty()) {
             throw new Exception("Debe ingresar una patente");
@@ -231,10 +224,10 @@ public class VehiculoServicio {
             throw new Exception("Debe ingresar los kilómetros");
         }
         
-//        Usuario usuario = usuarioServicio.buscarPorId(idUsuario);
-//        if (usuario == null) {
-//            throw new Exception("El usuario no existe");
-//        }
+        Usuario usuario = usuarioServicio.buscarUsuarioPorId(idUsuario);
+        if (usuario == null) {
+            throw new Exception("El usuario no existe");
+        }
 
         Vehiculo vehiculo = new Vehiculo();
         
