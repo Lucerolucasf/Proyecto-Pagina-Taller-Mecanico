@@ -3,6 +3,8 @@ package com.tallereggs.controladores;
 
 import com.tallereggs.entidades.Presupuesto;
 import com.tallereggs.entidades.PresupuestoDetalle;
+import com.tallereggs.entidades.Usuario;
+import com.tallereggs.entidades.Vehiculo;
 import com.tallereggs.errores.ErrorServicio;
 import com.tallereggs.servicios.PresupuestoServicio;
 import java.util.List;
@@ -43,26 +45,39 @@ public class PresupuestoControlador {
         List<PresupuestoDetalle> detallesPresupuesto = presupuestoServicio.listarDetalles();
         modelo.put("detallesPresupuesto", detallesPresupuesto);
         
-      
+    
         return "presupuesto.html";
+        
+    }
+      @GetMapping("/inicioPersonal")
+    public String inicioPersonal(ModelMap modelo) {
+//Averiguar como usar nueva Query para que al seleccionar el usuario, aparezcan en el select de vehículo los vehículos vinculados a ese usuario
+           List<Usuario> usuarios = presupuestoServicio.listarUsuarios();
+       modelo.put("usuarios", usuarios);
+        List<Vehiculo> vehiculos = presupuestoServicio.listarVehiculos();
+       modelo.put("vehiculos", vehiculos);
+
+        return "inicioPersonal.html";
         
     }
     
     //Método para crear los presupuestos
     
     @PostMapping("/form")
-    public String crear(RedirectAttributes attr, @RequestParam String idVehiculo, String idUsuario, @RequestParam String fallaDescripcion,Float total){
-
-        
+    public String crear(RedirectAttributes attr, @RequestParam String idVehiculo, String idUsuario, @RequestParam String fallaDescripcion, Float total){
+      
         try {
             presupuestoServicio.agregar(idVehiculo, idUsuario, fallaDescripcion, total);
             attr.addFlashAttribute("exito", "El presupuesto se agregó exitosamente.");
-        } catch (ErrorServicio ex) {
-           attr.addFlashAttribute("error", ex.getMessage());
+        } catch (Exception ex) {
+            attr.addFlashAttribute("error", ex.getMessage());
         }
-        
-        return "redirect:/presupuesto";
+            
+            return "redirect:/presupuesto";
     }
+            
+            
+           
     
     //Método para listar todos los presupuestos
     
@@ -99,7 +114,7 @@ public class PresupuestoControlador {
     public String modificar(RedirectAttributes attr,@RequestParam String id, @RequestParam String idVehiculo, @RequestParam String idUsuario, @RequestParam String fallaDescripcion, @RequestParam Float precio){
         
         try {
-            presupuestoServicio.modificar(idUsuario, idVehiculo, idUsuario, fallaDescripcion, precio);
+            presupuestoServicio.modificar(id, idVehiculo, idUsuario, fallaDescripcion, precio);
             attr.addFlashAttribute("exito", "Se modificó el presupuesto correctamente.");
         } catch (ErrorServicio ex) {
            attr.addFlashAttribute("error", ex.getMessage());

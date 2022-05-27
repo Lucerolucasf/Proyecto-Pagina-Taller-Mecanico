@@ -2,6 +2,8 @@ package com.tallereggs.servicios;
 
 import com.tallereggs.entidades.Presupuesto;
 import com.tallereggs.entidades.PresupuestoDetalle;
+import com.tallereggs.entidades.Usuario;
+import com.tallereggs.entidades.Vehiculo;
 import com.tallereggs.errores.ErrorServicio;
 import com.tallereggs.repositorios.PresupuestoDetalleRepositorio;
 import com.tallereggs.repositorios.PresupuestoRepositorio;
@@ -20,24 +22,27 @@ public class PresupuestoServicio {
     @Autowired
     private PresupuestoDetalleRepositorio presupuestoDetalleRepositorio;
     
-//    @Autowired
-//    private PresupuestoDetalleServicio presupuestoDetalleServicio;
+    @Autowired
+    private VehiculoServicio vehiculoServicio;
+    
+    @Autowired
+    private UsuarioServicio usuarioServicio;
 
 
     //Método para agregar presupuestos
     @Transactional(rollbackFor = {Exception.class})
-    public void agregar(String idVehiculo, String idUsuario, String fallaDescripcion, Float total) throws ErrorServicio {
+    public void agregar(String idVehiculo, String idUsuario, String fallaDescripcion, Float total) throws ErrorServicio, Exception {
 
         validar(idVehiculo, idUsuario, fallaDescripcion, total);
 
         Presupuesto presupuesto = new Presupuesto();
 
-        //Vehiculo vehiculo = vehiculoServicio.buscarPorId(idVehiculo);
-        //Usuario usuario = usuarioServicio.buscarPorId(idUsuario);
+        Vehiculo vehiculo = vehiculoServicio.buscarPorId(idVehiculo);
+        Usuario usuario = usuarioServicio.buscarUsuarioPorId(idUsuario);
         presupuesto.setFallaDescripcion(fallaDescripcion);
         presupuesto.setTotal(0f);
-        //presupuesto.setVehiculo(vehiculo);
-        //presupuesto.setUsuario(usuario);
+        presupuesto.setVehiculo(vehiculo);
+        presupuesto.setUsuario(usuario);
 
         presupuestoRepositorio.save(presupuesto);
     }
@@ -144,6 +149,16 @@ public class PresupuestoServicio {
         if (total == null || total < 0) {
             throw new ErrorServicio("El número ingresado no puede ser nulo o menor a cero.");
         }
+    }
+    
+    @Transactional(readOnly = true)
+    public List<Usuario> listarUsuarios(){
+    return usuarioServicio.listarUsuarios();
+}
+    
+    @Transactional(readOnly = true)
+    public List<Vehiculo> listarVehiculos(){
+        return vehiculoServicio.mostrarVehiculos();
     }
 
 }

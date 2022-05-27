@@ -46,7 +46,8 @@
             <a class="nav-link" href="/presupuesto">Presupuesto</a>
                 
         </ul>
-        
+        <h3 th:if="${error != null}" th:text="${error}"></h3>
+        <h3 th:if="${logout != null}" th:text="${logout}"></h3>
         <!--  modal -->
 
         <div class="modal fade" id="miModal" tabindex="-1" aria-hidden="true" aria-labelledby="modalTitle">
@@ -62,14 +63,14 @@
 
                     <div class="modal-body">
 
-                        <form>
+                        <form th:action="@{/logincheck}" th:method="POST">
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="exampleInputPassword1">
+                                <input name="password" type="password" class="form-control" id="exampleInputPassword1">
                             </div>
                             <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Email address</label>
-                                <input type="email" class="form-control" id="exampleInputEmail1"
+                                <label for="exampleInputEmail1" class="form-label">DNI</label>
+                                <input name="username" class="form-control" id="exampleInputEmail1"
                                     aria-describedby="emailHelp">
                             </div>
 
@@ -80,8 +81,9 @@
                         <button type="submit" class="btn btn-primary"> Iniciar Sesion</button>
 
                     </div>
-
+                    
                     </form>
+                        
                 </div>
             </div>
 

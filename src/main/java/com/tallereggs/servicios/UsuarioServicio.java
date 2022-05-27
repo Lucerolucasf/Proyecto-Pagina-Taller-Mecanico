@@ -2,6 +2,7 @@ package com.tallereggs.servicios;
 
 import com.tallereggs.entidades.Usuario;
 import com.tallereggs.enums.EnumROL;
+import com.tallereggs.errores.ErrorServicio;
 import com.tallereggs.repositorios.UsuarioRepositorio;
 import java.util.ArrayList;
 import java.util.List;
@@ -115,7 +116,7 @@ public class UsuarioServicio implements UserDetailsService{
             return usuario;
 
         } else {
-            throw new Exception("El usuario NO existe");
+            throw new ErrorServicio("El usuario NO existe");
         }
     }
 
