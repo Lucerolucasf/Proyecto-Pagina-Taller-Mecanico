@@ -29,7 +29,8 @@
             <p th:if="${Error!=null}" th:text="${Error}" class="bg-danger"></p>
             <p th:if="${Exito!=null}" th:text="${Exito}" class="bg-suscces"></p>
 
-            <p th:if="${vacio!=null}" th:text="${vacio}" class=" text-white bg-danger"></p>    
+            <p th:if="${vacio!=null}" th:text="${vacio}" class=" text-white bg-danger"></p>  
+            <p th:if="${session.usuariosession!=null}" th:text="${session.usuariosession.username}"></p>
         </div>
        
 

@@ -14,6 +14,9 @@ public interface VehiculoRepositorio extends JpaRepository<Vehiculo, String>{
     @Query("SELECT v FROM Vehiculo v WHERE v.patente LIKE %:patente% ")
     public List<Vehiculo> buscarPorPatente(@Param("patente")String patente);
     
+    @Query("SELECT v FROM Vehiculo v WHERE v.usuario.id LIKE :id")
+    public List<Vehiculo> buscarPorUsuario(@Param("id")String id);
+    
     
     
     //metodo guardar, actualizar-modificar, consultar y eliminar

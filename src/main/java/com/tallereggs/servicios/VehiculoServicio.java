@@ -138,11 +138,16 @@ public class VehiculoServicio {
     public List<Vehiculo> mostrarVehiculos() {
         return vehiculoRepositorio.findAll();
     }
+    
+    @Transactional(readOnly = true)
+    public List<Vehiculo> listarPorUsuario(String id){
+        return vehiculoRepositorio.buscarPorUsuario(id);
+    }
 
     
 
     @Transactional(readOnly = true)
-    public Vehiculo buscarPorId(String id) {
+    public Vehiculo buscarPorId(String id) throws ErrorServicio {
 
         Optional<Vehiculo> v = vehiculoRepositorio.findById(id);
 
@@ -150,7 +155,7 @@ public class VehiculoServicio {
             Vehiculo vehiculo = v.get();
             return vehiculo;
         } else {
-            return null;
+            throw new ErrorServicio("El vehículo NO existe");
         }
     }
 

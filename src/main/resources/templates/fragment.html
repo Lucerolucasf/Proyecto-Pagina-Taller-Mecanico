@@ -49,7 +49,22 @@ and open the template in the editor.
 
                                 </ul>
                             </li>
-
+                             <li class="nav-item dropdown">
+                   
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                       aria-expanded="false">Presupuesto</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#miModalPresupuesto">Crear Presupuesto</a></li>
+                        <li><a class="dropdown-item" href="presupuesto/listarPresupuestos">Mostrar Presupuesto</a></li>
+                        <li><a class="dropdown-item" href="#">Editar Presupuesto</a></li>
+                    </ul>
+                </li>
+                            <li class="nav-item">
+                                <ul>
+                                <p>Usuario conectado: </p>
+                                </ul>
+                                <h3 class="text-warning" th:if="${session.usuariosession!=null}" th:text="${session.usuariosession.username}"></h3>
+                            </li>
                             <li>
                                 <a class="btn btn-primary " th:href="@{/logout}" >cerrar sesion</a>
                             </li>
@@ -226,10 +241,59 @@ and open the template in the editor.
                 </div>
             </div>
 
+       
+                <!--  modal presupuesto -->
+
+            <div class="modal fade" id="miModalPresupuesto" tabindex="-1" aria-hidden="true" aria-labelledby="modalTitle">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+
+                            <h5 class="modal-title" id="modalTitle">Cargar Presupuesto</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+
+                        </div>
+
+                        <div class="modal-body">
+
+                            <form th:action="@{/presupuesto/form}" method="POST">
+                                <div class="mb-3">
+                                    <label for="exampleInputPassword1" class="form-label">Vehiculo</label>
+                                     <select class="form-control" name="idUsuario">
+                                        <option th:each="vehiculo: ${vehiculos}" th:value="${vehiculo.id}" th:text="${vehiculo.modelo}" ></option>
+                                    </select>
+
+                                    <label for="exampleInputEmail1" class="form-label">Usuario</label>
+                                     <select class="form-control" name="idUsuario">
+                                        <option th:each="usuario: ${usuarios}" th:value="${usuario.id}" th:text="${usuario.nombre}" ></option>
+                                    </select>
+
+                                    <label for="exampleInputEmail1" class="form-label">Detalle</label>
+                                    <input type="text" class="form-control" id="exampleInputFalla" name="fallaDescripcion">
+
+                                    <label for="exampleFormControlTextarea1" class="form-label">total</label>
+                                    <input type="number" class="form-control" id="exampleInputTotal"sss name="total">
+
+                                </div>
+
+                        </div>
+
+                        <div class="modal-footer">
+
+                            <button type="submit" class="btn btn-primary"> Guardar Presupuesto </button>
+
+                        </div>
+
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+        
+        
         </div>
-        
-        
-        
     </body>
     
 
