@@ -13,41 +13,44 @@
         <title>Nuevo Presupuesto</title>
     </head>
     <body>
-
+        <a  href="#" class="btn btn-dark me-md-3 ">volver</a>
         <div class="row g-3 p-3">
             <div class="col-md-2">
-                <label for="patente" class="badge rounded-pill bg-light text-dark" >PATENTE</label>
-                <input class="shadow-sm rounded form-control" id="patente" name="patente">
+                <label for="patente" class="badge rounded-pill bg-light text-dark ">PATENTE</label>
+                <input class="shadow-sm rounded form-control" id="patente" name="patente"  readonly="">
             </div>
             <div class="col-md-2">
                 <label for="marca" class="badge rounded-pill bg-light text-dark">MARCA</label>
-                <input class="shadow-sm rounded form-control" id="marca" name="marca">
+                <input class="shadow-sm rounded form-control" id="marca" name="marca" readonly="">
             </div>
             <div class="col-md-2">
                 <label for="modelo" class="badge rounded-pill bg-light text-dark">MODELO</label>
-                <input class="shadow-sm rounded form-control" id="modelo" name="modelo">
+                <input class="shadow-sm rounded form-control" id="modelo" name="modelo" readonly="">
             </div>
             <div class="col-md-1">
                 <label for="anio" class="badge rounded-pill bg-light text-dark" >AÑO</label>
-                <input class="shadow-sm rounded form-control" id="anio" name="anio">
+                <input class="shadow-sm rounded form-control" id="anio" name="anio" readonly="">
             </div>
             <div class="col-md">
                 <label for="km" class="badge rounded-pill bg-light text-dark" >KILOMETRAJE</label>
-                <input class="shadow-sm rounded form-control" id="km" name="id">
+                <input class="shadow-sm rounded form-control" id="km" name="id" readonly="">
             </div>
             <div class="col-md">
                 <label for="cliente" class="badge rounded-pill bg-light text-dark" >DUEÑO</label>
-                <input class="shadow-sm rounded form-control" id="cliente" name="nombre">
+                <input class="shadow-sm rounded form-control" id="cliente" name="nombre" readonly="">
             </div>
-
-            <div class="form-floating">
-                <textarea class="form-control" placeholder="Ingrese detalles de la falla" id="detalleFalla" style="height: 150px"></textarea>
-                <label for="floatingTextarea">Detalles de la falla</label>
-            </div>
-
+            
+            <!--FORM DESCRIPCION-->
+            <form> <!--th:action="" method="POST"-->
+                <div class="">
+                    <textarea class="form-control" placeholder="Ingrese detalles de la falla" id="detalleFalla" rows="3" style="height: 150px"></textarea>
+                </div>
+                <button type="submit" class="btn btn-dark floatR">Guardar Descripcion</button>
+            </form>
+            
             <div class="d-flex ">
                 <div>
-                    <button type="button" class="btn btn-success ">AÑADIR ELEMENTO</button>
+                    <button type="button" class="btn btn-success " data-bs-toggle="modal" data-bs-target="#anadirElemento">AÑADIR ITEM</button>
                 </div>
 
                 <div class="form-group ms-auto" >
@@ -56,12 +59,12 @@
 
                         <div class="col-10">
 
-                            <input class="shadow-sm rounded form-control" id="cliente" name="nombre">
+                            <input class="shadow-sm rounded form-control" id="totalPresupuesto" name="totalPresupuesto" readonly="">
                         </div>
                     </div>
                 </div>
             </div>
-            <!--            TABALA DE DETALLES-->
+            <!--            TABLA DE DETALLES-->
             <table class="table me-5 ">
                 <thead>
                     <tr>
@@ -95,6 +98,46 @@
                     </tr>
                 </tbody>
             </table>
+
+
+            <!--MODAL AÑADIR ELEMENTO-->
+            <div class="modal fade" id="anadirElemento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Añadir ITEM</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+                        <!--CAMBIAR ACTION-->
+                        <form th:action="@{/usuario/form}" method="POST">
+                            <div class="modal-body">
+
+                                <div class="mb-3">
+                                    <label for="item" class="form-label">ITEM</label>
+                                    <input autocomplete="off" class="form-control" id="item" placeholder="item" name="item" ><!--th:value="${nombre}"--> 
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="cantidad" class="form-label">Cantidad</label>
+                                    <input autocomplete="off" class="form-control" id="item" placeholder="cantidad" name="cantidad" ><!--th:value="${nombre}"--> 
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="precioU" class="form-label">Precio Unitario</label>
+                                    <input autocomplete="off" class="form-control" id="precioU" placeholder="precio unitario" name="precio" ><!--th:value="${nombre}"--> 
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn btn-warning">Guardar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     </body>
 </html>
