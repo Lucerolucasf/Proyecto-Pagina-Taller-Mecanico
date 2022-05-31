@@ -78,7 +78,36 @@
                         <td th:text="${vehiculo.patente}"></td>
                         <td th:text="${vehiculo.usuario.nombre}"></td>
                         <td><button type="button" class="btn btn-warning" data-bs-toggle="modal" th:data-bs-target="${'#datosVehiculo' + i.index}">Ver Detalles</button></td>
-                        <td><a class="btn btn-success" data-bs-toggle="modal" data-bs-target="#miModalPresupuesto">Agregar Presupuesto</a></td>
+                        <td><a class="btn btn-success"data-bs-toggle="modal" data-bs-target="#anadirPresupuesto">Agregar Presupuesto</a></td>
+                          <!--MODAL AÑADIR ELEMENTO-->
+            <div class="modal fade" id="anadirPresupuesto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Añadir presupuesto</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+                        <!--CAMBIAR ACTION-->
+                        <form th:action="@{/presupuesto/form}"  method="POST">
+                            <input type="hidden" name="idVehiculo" th:value="${vehiculo.id}"/>
+                            <div class="modal-body">
+
+                                <div class="mb-3">
+                                    <label for="fallaDescripcion" class="form-label">Ingrese detalles de la falla</label>
+                                    <input autocomplete="off" class="form-control" id="fallaDescripcion" placeholder="Ingrese falla" name="fallaDescripcion" ><!--th:value="${nombre}"--> 
+                                </div>
+
+                               
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-warning">Guardar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
                     </tr>
 
                 </tbody>
@@ -134,44 +163,7 @@
             </div>
         </div>
 
-    <!--MODAL DATOS VEHICULOS-->
-
-    <!-- <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="staticBackdropLabel">Datos del vehiculo</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <table class="table">
-      
-      <tbody>
-        <tr>
-          <th scope="row">PATENTE</th>
-          <td name="patente" th:value="${vehiculo.patente}"></td>
-         
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td colspan="2">Larry the Bird</td>
-          <td>@twitter</td>
-        </tr>
-      </tbody>
-    </table>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-          </div>
-        </div>
-      </div>
-    </div>-->
+   
         
 </body>
 
