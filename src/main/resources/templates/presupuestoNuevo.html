@@ -8,46 +8,47 @@
 
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-        <link href="../static/stylesV.css" rel="stylesheet" type="text/css">
+        <link href="../../stylesV.css" rel="stylesheet" type="text/css">
 
         <title>Nuevo Presupuesto</title>
     </head>
     <body>
-        <a  href="#" class="btn btn-dark me-md-3 ">volver</a>
+        <a  href="javascript: history.go(-1)"  class="btn btn-dark me-md-3 ">volver</a>
         <div class="row g-3 p-3">
             <div class="col-md-2">
-                <label for="patente" class="badge rounded-pill bg-light text-dark ">PATENTE</label>
-                <input class="shadow-sm rounded form-control" id="patente" name="patente"  readonly="">
+                <label for="patente" class="badge rounded-pill bg-light text-dark topic">PATENTE</label>
+                <input class="shadow-sm rounded form-control topic" id="patente" name="patente" readonly="" th:value="${vehiculo.patente}" >
             </div>
             <div class="col-md-2">
-                <label for="marca" class="badge rounded-pill bg-light text-dark">MARCA</label>
-                <input class="shadow-sm rounded form-control" id="marca" name="marca" readonly="">
+                <label for="marca" class="badge rounded-pill bg-light text-dark topic">MARCA</label>
+                <input class="shadow-sm rounded form-control topic" id="marca" name="marca" readonly="" th:value="${vehiculo.marca}">
             </div>
             <div class="col-md-2">
-                <label for="modelo" class="badge rounded-pill bg-light text-dark">MODELO</label>
-                <input class="shadow-sm rounded form-control" id="modelo" name="modelo" readonly="">
+                <label for="modelo" class="badge rounded-pill bg-light text-dark topic">MODELO</label>
+                <input class="shadow-sm rounded form-control topic" id="modelo" name="modelo" readonly=""  th:value="${vehiculo.modelo}">
             </div>
             <div class="col-md-1">
-                <label for="anio" class="badge rounded-pill bg-light text-dark" >AÑO</label>
-                <input class="shadow-sm rounded form-control" id="anio" name="anio" readonly="">
+                <label for="anio" class="badge rounded-pill bg-light text-dark topic" >AÑO</label>
+                <input class="shadow-sm rounded form-control topic" id="anio" name="anio" readonly="" th:value="${vehiculo.anio}">
             </div>
             <div class="col-md">
-                <label for="km" class="badge rounded-pill bg-light text-dark" >KILOMETRAJE</label>
-                <input class="shadow-sm rounded form-control" id="km" name="id" readonly="">
+                <label for="km" class="badge rounded-pill bg-light text-dark topic" >KILOMETRAJE</label>
+                <input class="shadow-sm rounded form-control topic" id="km" name="km" readonly="" th:value="${vehiculo.km}">
             </div>
             <div class="col-md">
-                <label for="cliente" class="badge rounded-pill bg-light text-dark" >DUEÑO</label>
-                <input class="shadow-sm rounded form-control" id="cliente" name="nombre" readonly="">
+                <label for="cliente" class="badge rounded-pill bg-light text-dark topic" >DUEÑO</label>
+                <input class="shadow-sm rounded form-control topic" id="cliente" name="nombre" readonly="" th:value="${vehiculo.usuario.nombre}">
             </div>
-            
+
             <!--FORM DESCRIPCION-->
-            <form> <!--th:action="" method="POST"-->
-                <div class="">
-                    <textarea class="form-control" placeholder="Ingrese detalles de la falla" id="detalleFalla" rows="3" style="height: 150px"></textarea>
-                </div>
-                <button type="submit" class="btn btn-dark floatR">Guardar Descripcion</button>
-            </form>
-            
+
+            <div class="">   
+                <input readonly="" class="form-control topic"  name="fallaDescripcion" rows="3" style="height: 75px" th:value="${presupuesto.fallaDescripcion}">
+            </div>
+
+
+
+
             <div class="d-flex ">
                 <div>
                     <button type="button" class="btn btn-success " data-bs-toggle="modal" data-bs-target="#anadirElemento">AÑADIR ITEM</button>
@@ -59,16 +60,18 @@
 
                         <div class="col-10">
 
-                            <input class="shadow-sm rounded form-control" id="totalPresupuesto" name="totalPresupuesto" readonly="">
+                            <input class="shadow-sm rounded form-control" id="totalPresupuesto" name="total" th:value="${total}" readonly="">
                         </div>
                     </div>
                 </div>
             </div>
+            <h3 th:if="${exito != null}" th:text="${exito}" class="text-success"></h3>
+            <h3 th:if="${error != null}" th:text="${error}" class="text-danger"></h3>
             <!--            TABLA DE DETALLES-->
             <table class="table me-5 ">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
+                       
                         <th scope="col">ELEMENTO</th>
                         <th scope="col">CANTIDAD</th>
                         <th scope="col">PRECIO UNITARIO</th>
@@ -76,26 +79,25 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
+                    <tr th:each="presupuestoDetalle : ${list}">
+                        <th scope="row"th:text="${presupuestoDetalle.detalle}"></th>
+                        <td th:text="${presupuestoDetalle.cantidad}"></td>
+                        <td th:text="${presupuestoDetalle.precio}"></td>
+                       
                     </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                        <td>@fat</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td colspan="2">Larry the Bird</td>
-                        <td>@twitter</td>
-                        <td>@twitter</td>
-                    </tr>
+                    <!--                    <tr>
+                                            <th scope="row">2</th>
+                                            <td>Jacob</td>
+                                            <td>Thornton</td>
+                                            <td>@fat</td>
+                                            <td>@fat</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">3</th>
+                                            <td colspan="2">Larry the Bird</td>
+                                            <td>@twitter</td>
+                                            <td>@twitter</td>
+                                        </tr>-->
                 </tbody>
             </table>
 
@@ -110,29 +112,31 @@
                         </div>
 
                         <!--CAMBIAR ACTION-->
-                        <form th:action="@{/usuario/form}" method="POST">
+                        <form th:action="@{/presupuestoDetalle/form} " method="POST">
+                              <input type="hidden" name="idPresupuesto" th:value="${presupuesto.id}"/>
                             <div class="modal-body">
 
                                 <div class="mb-3">
                                     <label for="item" class="form-label">ITEM</label>
-                                    <input autocomplete="off" class="form-control" id="item" placeholder="item" name="item" ><!--th:value="${nombre}"--> 
+                                    <input autocomplete="off" class="form-control" id="item" placeholder="item" name="detalle"> 
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="cantidad" class="form-label">Cantidad</label>
-                                    <input autocomplete="off" class="form-control" id="item" placeholder="cantidad" name="cantidad" ><!--th:value="${nombre}"--> 
+                                    <input autocomplete="off" class="form-control" id="item" placeholder="cantidad" name="cantidad"> 
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="precioU" class="form-label">Precio Unitario</label>
-                                    <input autocomplete="off" class="form-control" id="precioU" placeholder="precio unitario" name="precio" ><!--th:value="${nombre}"--> 
+                                    <input autocomplete="off" class="form-control" id="precioU" placeholder="precio unitario" name="precio"><!--th:value="${nombre}"--> 
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                <button type="button" class="btn btn-warning">Guardar</button>
+                                <button type="submit" class="btn btn-warning">Guardar</button>
                             </div>
                         </form>
+
                     </div>
                 </div>
             </div>

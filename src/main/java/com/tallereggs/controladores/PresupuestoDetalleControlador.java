@@ -36,26 +36,33 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
     public String crear(RedirectAttributes attr, @RequestParam String detalle, @RequestParam Integer cantidad, @RequestParam Float precio, @RequestParam String idPresupuesto){
         
         try {
-            presupuestoDetalleServicio.agregar(detalle, cantidad, precio, idPresupuesto);
+           presupuestoDetalleServicio.agregar(detalle, cantidad, precio, idPresupuesto);
             attr.addFlashAttribute("exito", "El detalle se agregó correctamente.");
+            
         } catch (ErrorServicio ex) {
             attr.addFlashAttribute("error", ex.getMessage());
         }
         
-        return "redirect:/form"; 
+        return "redirect:/presupuesto/form/" + idPresupuesto; 
         
     }
     
     //Método para listar los detalles concretos de un Id presupuesto
-    @GetMapping("/lista/{id}")//Este Id es del presupuesto que se quiere listar sus detalles
-    public String listaPorIdPresupuesto(ModelMap modelo,@PathVariable String idPresupuesto){
-        List<PresupuestoDetalle> presupuestosDetalle =  presupuestoDetalleServicio.listaDeDetallesPorPresupuestoId(idPresupuesto);
-        modelo.put("presupuestosDetalle", presupuestosDetalle);
+    /**
+     * Para este autocompletado colocar "/** + ENTER"
+     * @param modelo
+     * @param idPresupuesto
+     * @return 
+     */
+    @GetMapping("/presupuesto/form/lista/{idPresupuesto}")//Este Id es del presupuesto que se quiere listar sus detalles
+    public String listaPorIdPresupuesto(RedirectAttributes attr,@PathVariable String idPresupuesto){
+        List<PresupuestoDetalle> presupuestoDetalles =  presupuestoDetalleServicio.listaDeDetallesPorPresupuestoId(idPresupuesto);
+        attr.addFlashAttribute("presupuestosDetalle", presupuestoDetalles);
 
         Float total = presupuestoDetalleServicio.sumarPrecios(idPresupuesto);
-        modelo.put("total", total);
+        attr.addFlashAttribute("total", total);
 
-        return "ListaPresupuestoDetallePorPresupuestoId.html";
+        return "redirect:/presupuesto/form/lista/" + idPresupuesto;
     }
     
     //Método para eliminar detalles de presupuesto por Id de DetallePresupuesto
