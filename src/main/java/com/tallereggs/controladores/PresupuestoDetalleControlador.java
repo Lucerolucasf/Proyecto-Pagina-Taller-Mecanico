@@ -1,6 +1,6 @@
-
 package com.tallereggs.controladores;
 
+import com.tallereggs.entidades.Presupuesto;
 import com.tallereggs.entidades.PresupuestoDetalle;
 import com.tallereggs.errores.ErrorServicio;
 import com.tallereggs.servicios.PresupuestoDetalleServicio;
@@ -19,90 +19,104 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/presupuestoDetalle")
- class PresupuestoDetalleControlador {
-    
+class PresupuestoDetalleControlador {
+
     @Autowired
     private PresupuestoDetalleServicio presupuestoDetalleServicio;
-    
+
     //Método para enviar a vista para agregar datos
     @GetMapping("/form")
-    public String form(){
-        
-        return "AdministrarPresupuestoDetalle.html"; 
+    public String form() {
+
+        return "AdministrarPresupuestoDetalle.html";
     }
-    
+
     //Método para crear detalles de presupuesto
     @PostMapping("/form")
-    public String crear(RedirectAttributes attr, @RequestParam String detalle, @RequestParam Integer cantidad, @RequestParam Float precio, @RequestParam String idPresupuesto){
-        
+    public String crear(RedirectAttributes attr, @RequestParam String detalle, @RequestParam Integer cantidad, @RequestParam Float precio, @RequestParam String idPresupuesto) {
+
         try {
-           presupuestoDetalleServicio.agregar(detalle, cantidad, precio, idPresupuesto);
+            presupuestoDetalleServicio.agregar(detalle, cantidad, precio, idPresupuesto);
             attr.addFlashAttribute("exito", "El detalle se agregó correctamente.");
-            
+
         } catch (ErrorServicio ex) {
             attr.addFlashAttribute("error", ex.getMessage());
         }
-        
-        return "redirect:/presupuesto/form/" + idPresupuesto; 
-        
+
+        return "redirect:/presupuesto/form/" + idPresupuesto;
+
     }
-    
+
     //Método para listar los detalles concretos de un Id presupuesto
     /**
      * Para este autocompletado colocar "/** + ENTER"
+     *
      * @param modelo
      * @param idPresupuesto
-     * @return 
+     * @return
      */
-    @GetMapping("/presupuesto/form/lista/{idPresupuesto}")//Este Id es del presupuesto que se quiere listar sus detalles
-    public String listaPorIdPresupuesto(RedirectAttributes attr,@PathVariable String idPresupuesto){
-        List<PresupuestoDetalle> presupuestoDetalles =  presupuestoDetalleServicio.listaDeDetallesPorPresupuestoId(idPresupuesto);
-        attr.addFlashAttribute("presupuestosDetalle", presupuestoDetalles);
-
-        Float total = presupuestoDetalleServicio.sumarPrecios(idPresupuesto);
-        attr.addFlashAttribute("total", total);
-
-        return "redirect:/presupuesto/form/lista/" + idPresupuesto;
-    }
-    
+//    @GetMapping("/presupuesto/form/lista/{idPresupuesto}")//Este Id es del presupuesto que se quiere listar sus detalles
+//    public String listaPorIdPresupuesto(RedirectAttributes attr, @PathVariable String idPresupuesto) {
+//        List<PresupuestoDetalle> presupuestoDetalles = presupuestoDetalleServicio.listaDeDetallesPorPresupuestoId(idPresupuesto);
+//        attr.addFlashAttribute("presupuestosDetalle", presupuestoDetalles);
+//
+//        Float total = presupuestoDetalleServicio.sumarPrecios(idPresupuesto);
+//        attr.addFlashAttribute("total", total);
+//
+//        return "redirect:/presupuesto/form/lista/" + idPresupuesto;
+//    }
     //Método para eliminar detalles de presupuesto por Id de DetallePresupuesto
     @GetMapping("/eliminar/{id}")
-    public String eliminar(RedirectAttributes attr, @PathVariable String id){
-        presupuestoDetalleServicio.eliminar(id);
-        attr.addFlashAttribute("exito", "Se eliminó el detalle correctamente.");
-        
-        return "redirect:/lista";
+    public String eliminar(RedirectAttributes attr, @PathVariable String id) {
+        PresupuestoDetalle presupuestoDetalle = null;
+        Presupuesto presupuesto = null;
+
+        try {
+            presupuestoDetalle = presupuestoDetalleServicio.buscarPorId(id);
+            presupuesto = presupuestoDetalle.getPresupuesto();
+            presupuestoDetalleServicio.eliminar(id);
+            attr.addFlashAttribute("exito", "Se eliminó el detalle correctamente.");
+            return "redirect:/presupuesto/form/" + presupuesto.getId();
+        } catch (ErrorServicio ex) {
+            Logger.getLogger(PresupuestoDetalleControlador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return "redirect:/presupuesto/form/" + presupuesto.getId();
     }
-  //Método para ir a la vista de de lo que se modifique  
+    //Método para ir a la vista de de lo que se modifique  
+
     @GetMapping("/modificar/{id}")
-    public String editar(ModelMap modelo, @PathVariable String id){
-        
+    public String editar(ModelMap modelo, @PathVariable String id) {
+
         try {
             PresupuestoDetalle presupuestoDetalle = presupuestoDetalleServicio.buscarPorId(id);
             modelo.put("presupuestoDetalle", presupuestoDetalle);
         } catch (ErrorServicio ex) {
-          
+
         }
         return "EditarDetallePresupuesto.html";
     }
+
     //Método para modificar los detalles de un presupuesto
     @PostMapping("/modificar")
-    public String modificar(RedirectAttributes attr, @RequestParam String id, @RequestParam String detalle, @RequestParam Integer cantidad, @RequestParam Float precio, @RequestParam String idPresupuesto){
-        
+    public String modificar(RedirectAttributes attr, @RequestParam String idDetalle, @RequestParam String detalle, @RequestParam Integer cantidad, @RequestParam Float precio, @RequestParam String idPresupuesto) {
+
+        PresupuestoDetalle presupuestoDetalle = null;
+        Presupuesto presupuesto = null;
+
         try {
-            presupuestoDetalleServicio.modificar(id, detalle, cantidad, precio, idPresupuesto);
+            presupuestoDetalle = presupuestoDetalleServicio.buscarPorId(idDetalle);
+            presupuesto = presupuestoDetalle.getPresupuesto();
+
+            presupuestoDetalleServicio.modificar(idDetalle, detalle, cantidad, precio, idPresupuesto);
             attr.addFlashAttribute("exito", "El detalles se modifió correctamente.");
+
+            return "redirect:/presupuesto/form/" + presupuesto.getId();
+
         } catch (ErrorServicio ex) {
             attr.addFlashAttribute("error", ex.getMessage());
         }
-        return "redirect:/lista";
+        return "redirect:/presupuesto/form/" + presupuesto.getId();
     }
-    
-    
-    
+
 }
-    
-    
-    
-    
-    
