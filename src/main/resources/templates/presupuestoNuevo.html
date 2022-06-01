@@ -13,7 +13,8 @@
         <title>Nuevo Presupuesto</title>
     </head>
     <body>
-        <a  href="javascript: history.go(-1)"  class="btn btn-dark me-md-3 ">volver</a>
+        <a  href="/searchAuto?searchAuto="  class="btn btn-dark me-md-3 ">volver</a>
+        <!--<a  href="javascript: history.go(-1)"  class="btn btn-dark me-md-3 ">volver</a>-->
         <div class="row g-3 p-3">
             <div class="col-md-2">
                 <label for="patente" class="badge rounded-pill bg-light text-dark topic">PATENTE</label>
@@ -71,33 +72,64 @@
             <table class="table me-5 ">
                 <thead>
                     <tr>
-                       
+
                         <th scope="col">ELEMENTO</th>
                         <th scope="col">CANTIDAD</th>
                         <th scope="col">PRECIO UNITARIO</th>
-                        <th scope="col">PRECIO TOTAL</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="presupuestoDetalle : ${list}">
+                    <tr th:each="presupuestoDetalle, i : ${list}">
                         <th scope="row"th:text="${presupuestoDetalle.detalle}"></th>
                         <td th:text="${presupuestoDetalle.cantidad}"></td>
                         <td th:text="${presupuestoDetalle.precio}"></td>
-                       
-                    </tr>
-                    <!--                    <tr>
-                                            <th scope="row">2</th>
-                                            <td>Jacob</td>
-                                            <td>Thornton</td>
-                                            <td>@fat</td>
-                                            <td>@fat</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">3</th>
-                                            <td colspan="2">Larry the Bird</td>
-                                            <td>@twitter</td>
-                                            <td>@twitter</td>
-                                        </tr>-->
+                        <td> <a  data-bs-toggle="modal" th:data-bs-target="${'#editarItem' + i.index}" type="button" class="btn btn-warning">EDITAR</a></td>
+
+                        <!--MODAL EDITAR ITEM-->
+                <div class="modal fade" th:id="${'editarItem' + i.index}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Editar ITEM</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <!--CAMBIAR ACTION-->
+                            <form th:action="@{/presupuestoDetalle/modificar} " method="POST">
+                                <input type="hidden" name="idPresupuesto" th:value="${presupuesto.id}"/>
+                                <input type="hidden" name="idDetalle" th:value="${presupuestoDetalle.id}"/>
+                                <div class="modal-body">
+
+                                    <div class="mb-3">
+                                        <label for="item" class="form-label">ITEM</label>
+                                        <input autocomplete="off" class="form-control" id="item" placeholder="item" name="detalle" th:value="${presupuestoDetalle.detalle}"> 
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="cantidad" class="form-label">Cantidad</label>
+                                        <input autocomplete="off" class="form-control" id="item" placeholder="cantidad" name="cantidad" th:value="${presupuestoDetalle.cantidad}">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="precioU" class="form-label">Precio Unitario</label>
+                                        <input autocomplete="off" class="form-control" id="precioU" placeholder="precio unitario" name="precio" th:value="${presupuestoDetalle.precio}">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                    <button type="submit" class="btn btn-warning">Guardar</button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+
+                <td> <a  th:href="@{/presupuestoDetalle/eliminar/}+${presupuestoDetalle.id}" type="button" class="btn btn-danger">X</a></td>
+                </tr>
+
                 </tbody>
             </table>
 
@@ -113,7 +145,7 @@
 
                         <!--CAMBIAR ACTION-->
                         <form th:action="@{/presupuestoDetalle/form} " method="POST">
-                              <input type="hidden" name="idPresupuesto" th:value="${presupuesto.id}"/>
+                            <input type="hidden" name="idPresupuesto" th:value="${presupuesto.id}"/>
                             <div class="modal-body">
 
                                 <div class="mb-3">
