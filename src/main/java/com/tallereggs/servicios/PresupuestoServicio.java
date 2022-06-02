@@ -31,27 +31,29 @@ public class PresupuestoServicio {
 
     //Método para agregar presupuestos
     @Transactional(rollbackFor = {Exception.class})
-    public void agregar(String idVehiculo, String idUsuario, String fallaDescripcion, Float total) throws ErrorServicio, Exception {
+    public Presupuesto agregar(String idVehiculo, String fallaDescripcion, Float total) throws ErrorServicio, Exception {
 
-        validar(idVehiculo, idUsuario, fallaDescripcion, total);
+        validar(idVehiculo, fallaDescripcion, total);
 
         Presupuesto presupuesto = new Presupuesto();
 
         Vehiculo vehiculo = vehiculoServicio.buscarPorId(idVehiculo);
-        Usuario usuario = usuarioServicio.buscarUsuarioPorId(idUsuario);
+        
         presupuesto.setFallaDescripcion(fallaDescripcion);
         presupuesto.setTotal(0f);
         presupuesto.setVehiculo(vehiculo);
-        presupuesto.setUsuario(usuario);
+        presupuesto.setUsuario(vehiculo.getUsuario());
 
         presupuestoRepositorio.save(presupuesto);
+        
+        return presupuesto;
     }
 
     //Método para modificar un presupuesto.
     @Transactional(rollbackFor = {Exception.class})
     public void modificar(String id, String idVehiculo, String idUsuario, String fallaDescripcion, Float total) throws ErrorServicio {
 
-        validar(idVehiculo, idUsuario, fallaDescripcion, total);
+        validar(idVehiculo, fallaDescripcion, total);
 
         Presupuesto presupuesto = presupuestoRepositorio.buscarPresupuestoPorId(id);
         //Vehiculo vehiculo = vehiculoServicio.buscarVehiculoPorId(idVehiculo);
@@ -82,16 +84,16 @@ public class PresupuestoServicio {
 
     //Método para buscar presupuesto por nombre de usuario.
     @Transactional(readOnly = true)
-    public List<Presupuesto> buscarPorNombreUsuario(String nombre) throws ErrorServicio {
-        if (nombre == null || nombre.isEmpty()) {
+    public List<Presupuesto> buscarPresupuestosPorIdVehiculo(String id) throws ErrorServicio {
+        if (id == null || id.isEmpty()) {
             throw new ErrorServicio("Ingrese un nombre válido");
         }
-        List<Presupuesto> presupuestos = presupuestoRepositorio.buscarPresupuestoPorNombreUsuario(nombre);
+        List<Presupuesto> presupuestos = presupuestoRepositorio.buscarPresupuestosPorIdVehiculo(id);
 
         if (presupuestos != null) {
             return presupuestos;
         } else {
-            throw new ErrorServicio("No se encontró el presupuesto asignado al nombre del usuario ingresado.");
+            throw new ErrorServicio("No se encontró el presupuesto asignado al id del vehiculo ingresado.");
         }
 
     }
@@ -133,15 +135,18 @@ public class PresupuestoServicio {
         }
     }
     
+    @Transactional(readOnly = true)
+    public Vehiculo buscarVehiculoPorId(String id) throws ErrorServicio{
+        Vehiculo vehiculo = vehiculoServicio.buscarPorId(id);
+        return vehiculo;
+    }
+    
 
 
     //Método para validar que los datos ingresados no sean nulos ni vengan vacíos
-    public void validar(String idVehiculo, String idUsuario, String fallaDescripcion, Float total) throws ErrorServicio {
+    public void validar(String idVehiculo, String fallaDescripcion, Float total) throws ErrorServicio {
         if (idVehiculo == null || idVehiculo.trim().isEmpty()) { //El método trim(), sirve para que no llenen el form con un espacio vacío presionando barra espaciadora.
             throw new ErrorServicio("Ingrese un vehículo válido.");
-        }
-        if (idUsuario == null || idUsuario.trim().isEmpty()) {
-            throw new ErrorServicio("Ingrese un usuario válido.");
         }
         if (fallaDescripcion == null || fallaDescripcion.trim().isEmpty()) {
             throw new ErrorServicio("La falla de la descripción no puede ser nula.");

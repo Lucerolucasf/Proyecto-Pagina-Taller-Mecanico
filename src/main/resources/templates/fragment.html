@@ -13,7 +13,12 @@ and open the template in the editor.
     <body>
 
         <!-- NAV  CON MODAL-->
+
         <div th:fragment="nav" >
+            <input readOnly="" id="user" class="text-warning floatR" th:if="${session.usuariosession!=null}" th:value="${session.usuariosession.nombre}"></input>
+            <input readOnly="" id="user" class="text-warning floatR" th:if="${session.usuariosession!=null}" th:value="${session.usuariosession.apellido}"></input>
+
+            <a class="btn btn-dark floatR" th:href="@{/logout}" >cerrar sesion</a>
 
             <nav class="navbar navbar-expand-lg navbar-light bg-light  ">
                 <div>
@@ -28,7 +33,7 @@ and open the template in the editor.
                                 </ul>
                             </li>
 
-                            <li class="nav-item dropdown">
+                            <li class="nav-item dropdown"sec:authorize="hasAnyRole('ROLE_ADMIN') || hasAnyRole('ROLE_PERSONAL')" > <!--sec:authorize="hasAnyRole('ROLE_ADMIN') || hasAnyRole('ROLE_PERSONAL')"-->
                                 <a class="nav-link dropdown-toggle" href="#" id="nuevo" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     NUEVO
                                 </a>
@@ -49,25 +54,7 @@ and open the template in the editor.
 
                                 </ul>
                             </li>
-                             <li class="nav-item dropdown">
-                   
-                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-                       aria-expanded="false">Presupuesto</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#miModalPresupuesto">Crear Presupuesto</a></li>
-                        <li><a class="dropdown-item" href="presupuesto/listarPresupuestos">Mostrar Presupuesto</a></li>
-                        <li><a class="dropdown-item" href="#">Editar Presupuesto</a></li>
-                    </ul>
-                </li>
-                            <li class="nav-item">
-                                <ul>
-                                <p>Usuario conectado: </p>
-                                </ul>
-                                <h3 class="text-warning" th:if="${session.usuariosession!=null}" th:text="${session.usuariosession.username}"></h3>
-                            </li>
-                            <li>
-                                <a class="btn btn-primary " th:href="@{/logout}" >cerrar sesion</a>
-                            </li>
+
                         </ul>
 
                     </div>
@@ -170,7 +157,7 @@ and open the template in the editor.
 
                                 <div class="mb-3">
                                     <label for="formGroupExampleInput" class="form-label">Cliente</label>
-                                        <!-- VERIFICAR LISTA EN BACK AGREGARLA EN VEHICULO CONTROLADOR-->
+                                    <!-- VERIFICAR LISTA EN BACK AGREGARLA EN VEHICULO CONTROLADOR-->
                                     <select class="form-control" name="idUsuario">
                                         <option th:each="usuario: ${usuarios}" th:value="${usuario.id}" th:text="${usuario.nombre}" ></option>
                                     </select>
@@ -241,8 +228,8 @@ and open the template in the editor.
                 </div>
             </div>
 
-       
-                <!--  modal presupuesto -->
+
+            <!--  modal presupuesto -->
 
             <div class="modal fade" id="miModalPresupuesto" tabindex="-1" aria-hidden="true" aria-labelledby="modalTitle">
                 <div class="modal-dialog">
@@ -260,12 +247,12 @@ and open the template in the editor.
                             <form th:action="@{/presupuesto/form}" method="POST">
                                 <div class="mb-3">
                                     <label for="exampleInputPassword1" class="form-label">Vehiculo</label>
-                                     <select class="form-control" name="idUsuario">
+                                    <select class="form-control" name="idUsuario">
                                         <option th:each="vehiculo: ${vehiculos}" th:value="${vehiculo.id}" th:text="${vehiculo.modelo}" ></option>
                                     </select>
 
                                     <label for="exampleInputEmail1" class="form-label">Usuario</label>
-                                     <select class="form-control" name="idUsuario">
+                                    <select class="form-control" name="idUsuario">
                                         <option th:each="usuario: ${usuarios}" th:value="${usuario.id}" th:text="${usuario.nombre}" ></option>
                                     </select>
 
@@ -291,11 +278,11 @@ and open the template in the editor.
                 </div>
 
             </div>
-        
-        
+
+
         </div>
     </body>
-    
+
 
 
 </html>

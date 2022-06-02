@@ -7,6 +7,7 @@ import com.tallereggs.servicios.UsuarioServicio;
 import com.tallereggs.servicios.VehiculoServicio;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +26,8 @@ public class VehiculoControlador {
 
     @Autowired
     private UsuarioServicio usuarioServicio;
-
+ 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN') || hasAnyRole('ROLE_PERSONAL')")
     @PostMapping("/registrarVehiculo")
     public String registrarVehiculo(ModelMap model, RedirectAttributes attr, @RequestParam String patente, @RequestParam String modelo, @RequestParam String marca, @RequestParam String anio, @RequestParam String km, @RequestParam String idUsuario, @RequestParam MultipartFile archivo) {
         try {
@@ -52,6 +54,7 @@ public class VehiculoControlador {
 
     }
 
+      @PreAuthorize("hasAnyRole('ROLE_ADMIN') || hasAnyRole('ROLE_PERSONAL')")
        @PostMapping("/editarVehiculo")
     public String editarVehiculo(RedirectAttributes attr, @RequestParam() String id, @RequestParam String patente, @RequestParam String modelo, @RequestParam String marca, @RequestParam String anio, @RequestParam String km, @RequestParam String idUsuario, @RequestParam MultipartFile archivo, @RequestParam EnumEstado estado) {
 

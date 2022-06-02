@@ -3,14 +3,13 @@ package com.tallereggs.controladores;
 
 import com.tallereggs.entidades.Presupuesto;
 import com.tallereggs.entidades.PresupuestoDetalle;
-import com.tallereggs.entidades.Usuario;
 import com.tallereggs.entidades.Vehiculo;
 import com.tallereggs.errores.ErrorServicio;
+import com.tallereggs.servicios.PresupuestoDetalleServicio;
 import com.tallereggs.servicios.PresupuestoServicio;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,8 +26,10 @@ public class PresupuestoControlador {
     @Autowired
     private PresupuestoServicio presupuestoServicio;
     
-
+    @Autowired
+    private PresupuestoDetalleServicio presupuestoDetalleServicio;
     
+
     @GetMapping
     public String menuPresupuesto(){
         
@@ -39,41 +40,52 @@ public class PresupuestoControlador {
     
     
 
-    @GetMapping("/form")
-    public String form(ModelMap modelo){
+    @GetMapping("/detallesPresupuesto")
+    public String detalles(ModelMap modelo){
         
         List<PresupuestoDetalle> detallesPresupuesto = presupuestoServicio.listarDetalles();
         modelo.put("detallesPresupuesto", detallesPresupuesto);
         
     
-        return "presupuesto.html";
+        return "#.html";
         
     }
-      @GetMapping("/inicioPersonal")
-    public String inicioPersonal(ModelMap modelo) {
-//Averiguar como usar nueva Query para que al seleccionar el usuario, aparezcan en el select de vehículo los vehículos vinculados a ese usuario
-           List<Usuario> usuarios = presupuestoServicio.listarUsuarios();
-       modelo.put("usuarios", usuarios);
-        List<Vehiculo> vehiculos = presupuestoServicio.listarVehiculos();
-       modelo.put("vehiculos", vehiculos);
-
-        return "inicioPersonal.html";
+      @PreAuthorize("hasAnyRole('ROLE_ADMIN') || hasAnyRole('ROLE_PERSONAL')")
+      @GetMapping("/form/{idPresupuesto}")
+    public String inicioPersonal(ModelMap model, @PathVariable String idPresupuesto) {
         
-    }
+        try {
+           
+            Presupuesto presupuesto = presupuestoServicio.buscarPorId(idPresupuesto);
+            model.put("vehiculo", presupuesto.getVehiculo());
+            model.put("presupuesto", presupuesto);
+            List<PresupuestoDetalle> list = presupuestoDetalleServicio.listaDeDetallesPorPresupuestoId(idPresupuesto);
+            model.put("list", list);
+            Float total = presupuestoDetalleServicio.sumarPrecios(idPresupuesto);
+            model.put("total", total);
+        } catch (ErrorServicio ex) {
+           
+        }
+        
+        return "presupuestoNuevo.html";
+        }
     
     //Método para crear los presupuestos
-    
+      @PreAuthorize("hasAnyRole('ROLE_ADMIN') || hasAnyRole('ROLE_PERSONAL')")
     @PostMapping("/form")
-    public String crear(RedirectAttributes attr, @RequestParam String idVehiculo, String idUsuario, @RequestParam String fallaDescripcion, Float total){
+    public String crear(RedirectAttributes attr, @RequestParam String idVehiculo, @RequestParam String fallaDescripcion){
       
         try {
-            presupuestoServicio.agregar(idVehiculo, idUsuario, fallaDescripcion, total);
+           Presupuesto presupuesto = presupuestoServicio.agregar(idVehiculo, fallaDescripcion, 100f);
             attr.addFlashAttribute("exito", "El presupuesto se agregó exitosamente.");
+        attr.addFlashAttribute("presupuesto", presupuesto);
+         return "redirect:/presupuesto/form/" + presupuesto.getId();
         } catch (Exception ex) {
             attr.addFlashAttribute("error", ex.getMessage());
         }
+        
             
-            return "redirect:/presupuesto";
+            return "redirect:/searchAuto?searchAuto=";
     }
             
             
@@ -92,7 +104,7 @@ public class PresupuestoControlador {
     
     //Método para modificar presupuesto
     
-
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN') || hasAnyRole('ROLE_PERSONAL')")
     @GetMapping("/modificar/{id}")
     public String editar(ModelMap modelo, @PathVariable String id){
         
@@ -110,6 +122,7 @@ public class PresupuestoControlador {
     }
     
     //Método para modificar en base de datos un presupuesto
+      @PreAuthorize("hasAnyRole('ROLE_ADMIN') || hasAnyRole('ROLE_PERSONAL')")
     @PostMapping("/modificar")
     public String modificar(RedirectAttributes attr,@RequestParam String id, @RequestParam String idVehiculo, @RequestParam String idUsuario, @RequestParam String fallaDescripcion, @RequestParam Float precio){
         
@@ -123,7 +136,7 @@ public class PresupuestoControlador {
         return "redirect:/presupuesto/lista";
 
     }
-    
+      @PreAuthorize("hasAnyRole('ROLE_ADMIN') || hasAnyRole('ROLE_PERSONAL')")
     @GetMapping("/eliminar/{id}")
     public String eliminar(RedirectAttributes attr, @PathVariable String id){
         
@@ -135,7 +148,7 @@ public class PresupuestoControlador {
             attr.addFlashAttribute("error", ex.getMessage());
         }
             
-            return "redirect:presupuesto/lista";
+            return "redirect:/presupuesto/listarPresupuestos";
     }
     
         
