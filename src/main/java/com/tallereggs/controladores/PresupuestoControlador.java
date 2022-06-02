@@ -148,7 +148,7 @@ public class PresupuestoControlador {
             attr.addFlashAttribute("error", ex.getMessage());
         }
             
-            return "redirect:presupuesto/lista";
+            return "redirect:/presupuesto/listarPresupuestos";
     }
     
         
