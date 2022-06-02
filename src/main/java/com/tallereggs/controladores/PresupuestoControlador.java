@@ -9,6 +9,7 @@ import com.tallereggs.servicios.PresupuestoDetalleServicio;
 import com.tallereggs.servicios.PresupuestoServicio;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,6 +50,7 @@ public class PresupuestoControlador {
         return "#.html";
         
     }
+      @PreAuthorize("hasAnyRole('ROLE_ADMIN') || hasAnyRole('ROLE_PERSONAL')")
       @GetMapping("/form/{idPresupuesto}")
     public String inicioPersonal(ModelMap model, @PathVariable String idPresupuesto) {
         
@@ -69,7 +71,7 @@ public class PresupuestoControlador {
         }
     
     //Método para crear los presupuestos
-    
+      @PreAuthorize("hasAnyRole('ROLE_ADMIN') || hasAnyRole('ROLE_PERSONAL')")
     @PostMapping("/form")
     public String crear(RedirectAttributes attr, @RequestParam String idVehiculo, @RequestParam String fallaDescripcion){
       
@@ -102,7 +104,7 @@ public class PresupuestoControlador {
     
     //Método para modificar presupuesto
     
-
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN') || hasAnyRole('ROLE_PERSONAL')")
     @GetMapping("/modificar/{id}")
     public String editar(ModelMap modelo, @PathVariable String id){
         
@@ -120,6 +122,7 @@ public class PresupuestoControlador {
     }
     
     //Método para modificar en base de datos un presupuesto
+      @PreAuthorize("hasAnyRole('ROLE_ADMIN') || hasAnyRole('ROLE_PERSONAL')")
     @PostMapping("/modificar")
     public String modificar(RedirectAttributes attr,@RequestParam String id, @RequestParam String idVehiculo, @RequestParam String idUsuario, @RequestParam String fallaDescripcion, @RequestParam Float precio){
         
@@ -133,7 +136,7 @@ public class PresupuestoControlador {
         return "redirect:/presupuesto/lista";
 
     }
-    
+      @PreAuthorize("hasAnyRole('ROLE_ADMIN') || hasAnyRole('ROLE_PERSONAL')")
     @GetMapping("/eliminar/{id}")
     public String eliminar(RedirectAttributes attr, @PathVariable String id){
         

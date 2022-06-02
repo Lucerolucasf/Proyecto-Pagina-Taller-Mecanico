@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +33,7 @@ class PresupuestoDetalleControlador {
     }
 
     //Método para crear detalles de presupuesto
+      @PreAuthorize("hasAnyRole('ROLE_ADMIN') || hasAnyRole('ROLE_PERSONAL')")
     @PostMapping("/form")
     public String crear(RedirectAttributes attr, @RequestParam String detalle, @RequestParam Integer cantidad, @RequestParam Float precio, @RequestParam String idPresupuesto) {
 
@@ -66,6 +68,7 @@ class PresupuestoDetalleControlador {
 //        return "redirect:/presupuesto/form/lista/" + idPresupuesto;
 //    }
     //Método para eliminar detalles de presupuesto por Id de DetallePresupuesto
+      @PreAuthorize("hasAnyRole('ROLE_ADMIN') || hasAnyRole('ROLE_PERSONAL')")
     @GetMapping("/eliminar/{id}")
     public String eliminar(RedirectAttributes attr, @PathVariable String id) {
         PresupuestoDetalle presupuestoDetalle = null;
@@ -84,7 +87,7 @@ class PresupuestoDetalleControlador {
         return "redirect:/presupuesto/form/" + presupuesto.getId();
     }
     //Método para ir a la vista de de lo que se modifique  
-
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN') || hasAnyRole('ROLE_PERSONAL')")
     @GetMapping("/modificar/{id}")
     public String editar(ModelMap modelo, @PathVariable String id) {
 
@@ -98,6 +101,7 @@ class PresupuestoDetalleControlador {
     }
 
     //Método para modificar los detalles de un presupuesto
+      @PreAuthorize("hasAnyRole('ROLE_ADMIN') || hasAnyRole('ROLE_PERSONAL')")
     @PostMapping("/modificar")
     public String modificar(RedirectAttributes attr, @RequestParam String idDetalle, @RequestParam String detalle, @RequestParam Integer cantidad, @RequestParam Float precio, @RequestParam String idPresupuesto) {
 
