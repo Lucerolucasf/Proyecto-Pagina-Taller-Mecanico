@@ -140,8 +140,8 @@ public class VehiculoServicio {
     }
     
     @Transactional(readOnly = true)
-    public List<Vehiculo> listarPorUsuario(String id){
-        return vehiculoRepositorio.buscarPorUsuario(id);
+    public Vehiculo listarVehiculoPorUsuario(String id){
+        return vehiculoRepositorio.buscarVehiculoPorUsuario(id);
     }
 
     

@@ -1,10 +1,19 @@
 package com.tallereggs.controladores;
 
+import com.tallereggs.entidades.Presupuesto;
 import com.tallereggs.entidades.Usuario;
+import com.tallereggs.entidades.Vehiculo;
 import com.tallereggs.enums.EnumROL;
+import com.tallereggs.errores.ErrorServicio;
+import com.tallereggs.servicios.PresupuestoServicio;
 import com.tallereggs.servicios.UsuarioServicio;
+import com.tallereggs.servicios.VehiculoServicio;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,24 +26,41 @@ public class UsuarioControlador {
 
     @Autowired
     private UsuarioServicio usuarioServicio;
+    
+    @Autowired
+    private VehiculoServicio vehiculoServicio;
+    
+    @Autowired 
+    private PresupuestoServicio presupuestoServicio;    
+    
 
     @GetMapping("/usuario/form")
     public String form() {
         return "inicioPersonal.html";
     }
 
-     @GetMapping("/inicioPersonal")
-    public String inicioPersonal(ModelMap modelo) {
-
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN') || hasAnyRole('ROLE_PERSONAL') || hasAnyRole('ROLE_CLIENTE')")
+    @GetMapping("/inicioPersonal")
+    public String inicioPersonal(ModelMap modelo, HttpSession session) {
+        
+        Usuario u = (Usuario) session.getAttribute("usuariosession"); //Se toman los datos del usuario que inició sesión y luego se usa su ID para buscar un vehículo
+        Vehiculo vehiculo = vehiculoServicio.listarVehiculoPorUsuario(u.getId());
+        modelo.put("vehiculo", vehiculo);
+        try {
+            List<Presupuesto> presupuestos =  presupuestoServicio.buscarPresupuestosPorIdVehiculo(vehiculo.getId());
+            modelo.put("presupuestos", presupuestos);
+        } catch (ErrorServicio ex) {
+            Logger.getLogger(UsuarioControlador.class.getName()).log(Level.SEVERE, null, ex);
+        }
         List<Usuario> usuarios = usuarioServicio.listarUsuarios();
-       modelo.put("usuarios", usuarios);
+        modelo.put("usuarios", usuarios);
 
         return "inicioPersonal.html";
-        
-    }
-    
-    @PostMapping("/usuario/form")
 
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN') || hasAnyRole('ROLE_PERSONAL')")
+    @PostMapping("/usuario/form")
     public String crearUsuario(RedirectAttributes attr, ModelMap modelo, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String celular, @RequestParam String direccion, @RequestParam(required = false) String username, String password) throws Exception {
 
         try {
@@ -69,6 +95,7 @@ public class UsuarioControlador {
 
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN') || hasAnyRole('ROLE_PERSONAL')")
     @PostMapping("/usuario/editarUsuario")
     public String editarUsuario(ModelMap modelo, @RequestParam String id, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String celular, @RequestParam String direccion, @RequestParam(required = false) String username, String password) throws Exception {
 
@@ -88,6 +115,7 @@ public class UsuarioControlador {
 
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN') || hasAnyRole('ROLE_PERSONAL')")
     @PostMapping("/usuario/bajaUsuario")
     public String darBajaUsuario(ModelMap modelo, @RequestParam String id) throws Exception {
 
@@ -107,6 +135,7 @@ public class UsuarioControlador {
 
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN') || hasAnyRole('ROLE_PERSONAL')")
     @PostMapping("/usuario/altaUsuario")
     public String darAltaUsuario(ModelMap modelo, @RequestParam String id) throws Exception {
 
@@ -126,6 +155,7 @@ public class UsuarioControlador {
 
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping("/usuario/personalAlta")
     public String personalAlta(ModelMap modelo, @RequestParam String id) throws Exception {
 
@@ -140,8 +170,6 @@ public class UsuarioControlador {
     }
 
     ////modificacion del front////
-   
-
     @PostMapping("/buscador")
     public String buscador(ModelMap modelo, RedirectAttributes attr, @RequestParam(required = false) String searchAuto, @RequestParam(required = false) String searchCliente) {
 

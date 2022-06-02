@@ -28,7 +28,7 @@ and open the template in the editor.
                                 </ul>
                             </li>
 
-                            <li class="nav-item dropdown">
+                            <li class="nav-item dropdown" sec:authorize="hasAnyRole('ROLE_ADMIN') || hasAnyRole('ROLE_PERSONAL')">
                                 <a class="nav-link dropdown-toggle" href="#" id="nuevo" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     NUEVO
                                 </a>
@@ -63,7 +63,8 @@ and open the template in the editor.
                                 <ul>
                                 <p>Usuario conectado: </p>
                                 </ul>
-                                <h3 class="text-warning" th:if="${session.usuariosession!=null}" th:text="${session.usuariosession.username}"></h3>
+                                <h3 class="text-warning" th:if="${session.usuariosession!=null}" th:text="${session.usuariosession.nombre}"></h3>
+                                <h3 class="text-warning" th:if="${session.usuariosession!=null}" th:text="${session.usuariosession.apellido}"></h3>
                             </li>
                             <li>
                                 <a class="btn btn-primary " th:href="@{/logout}" >cerrar sesion</a>

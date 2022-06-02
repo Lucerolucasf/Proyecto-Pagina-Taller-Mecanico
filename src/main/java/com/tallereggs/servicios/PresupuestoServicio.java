@@ -84,16 +84,16 @@ public class PresupuestoServicio {
 
     //Método para buscar presupuesto por nombre de usuario.
     @Transactional(readOnly = true)
-    public List<Presupuesto> buscarPorNombreUsuario(String nombre) throws ErrorServicio {
-        if (nombre == null || nombre.isEmpty()) {
+    public List<Presupuesto> buscarPresupuestosPorIdVehiculo(String id) throws ErrorServicio {
+        if (id == null || id.isEmpty()) {
             throw new ErrorServicio("Ingrese un nombre válido");
         }
-        List<Presupuesto> presupuestos = presupuestoRepositorio.buscarPresupuestoPorNombreUsuario(nombre);
+        List<Presupuesto> presupuestos = presupuestoRepositorio.buscarPresupuestosPorIdVehiculo(id);
 
         if (presupuestos != null) {
             return presupuestos;
         } else {
-            throw new ErrorServicio("No se encontró el presupuesto asignado al nombre del usuario ingresado.");
+            throw new ErrorServicio("No se encontró el presupuesto asignado al id del vehiculo ingresado.");
         }
 
     }
