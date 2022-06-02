@@ -26,48 +26,48 @@
         
 <!--        INFORMACIÓN DEL USUARIO-->
 
-<h4>Información de su vehículo</h4>
-            <div class="col-md-2">
+<h4 sec:authorize="hasAnyRole('ROLE_CLIENTE')">Información de su vehículo</h4>
+            <div class="col-md-2" sec:authorize="hasAnyRole('ROLE_CLIENTE')">
                 <label for="patente" class="badge rounded-pill bg-light text-dark topic">PATENTE</label>
-                <input class="shadow-sm rounded form-control topic" id="patente" name="patente" readonly="" th:value="${vehiculo.patente}"> <!--th:value="${u.vehiculo.patente}"-->
+                <input class="shadow-sm rounded form-control topic" id="patente" name="patente" readonly="" th:if="${vehiculo != null}" th:value="${vehiculo.patente}"> <!--th:value="${u.vehiculo.patente}"-->
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2" sec:authorize="hasAnyRole('ROLE_CLIENTE')">
                 <label for="marca" class="badge rounded-pill bg-light text-dark topic">MARCA</label>
-                <input class="shadow-sm rounded form-control topic" id="marca" name="marca" readonly="" th:value="${vehiculo.marca}"><!--th:value="${u.vehiculo.marca}"-->
+                <input class="shadow-sm rounded form-control topic" id="marca" name="marca" readonly="" th:if="${vehiculo != null}" th:value="${vehiculo.marca}"><!--th:value="${u.vehiculo.marca}"-->
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2" sec:authorize="hasAnyRole('ROLE_CLIENTE')">
                 <label for="modelo" class="badge rounded-pill bg-light text-dark topic">MODELO</label>
-                <input class="shadow-sm rounded form-control topic" id="modelo" name="modelo" readonly="" th:value="${vehiculo.modelo}"><!-- th:value="${u.vehiculo.modelo}"-->
+                <input class="shadow-sm rounded form-control topic" id="modelo" name="modelo" readonly="" th:if="${vehiculo != null}" th:value="${vehiculo.modelo}"><!-- th:value="${u.vehiculo.modelo}"-->
             </div>
-            <div class="col-md-1">
+            <div class="col-md-1" sec:authorize="hasAnyRole('ROLE_CLIENTE')">
                 <label for="anio" class="badge rounded-pill bg-light text-dark topic" >AÑO</label>
-                <input class="shadow-sm rounded form-control topic" id="anio" name="anio" readonly="" th:value="${vehiculo.anio}"><!--th:value="${u.vehiculo.anio}"-->
+                <input class="shadow-sm rounded form-control topic" id="anio" name="anio" readonly="" th:if="${vehiculo != null}" th:value="${vehiculo.anio}"><!--th:value="${u.vehiculo.anio}"-->
             </div>
-            <div class="col-md">
+            <div class="col-md" sec:authorize="hasAnyRole('ROLE_CLIENTE')">
                 <label for="km" class="badge rounded-pill bg-light text-dark topic" >KILOMETRAJE</label>
-                <input class="shadow-sm rounded form-control topic" id="km" name="km" readonly="" th:value="${vehiculo.km}"><!-- th:value="${u.vehiculo.km}"-->
+                <input class="shadow-sm rounded form-control topic" id="km" name="km" readonly="" th:if="${vehiculo != null}" th:value="${vehiculo.km}"><!-- th:value="${u.vehiculo.km}"-->
             </div>
             
             
-            <h4>Información del cliente</h4>
+            <h4 sec:authorize="hasAnyRole('ROLE_CLIENTE')">Información del cliente </h4>
             
-             <div class="col-md-2">
+             <div class="col-md-2" sec:authorize="hasAnyRole('ROLE_CLIENTE')">
                 <label for="patente" class="badge rounded-pill bg-light text-dark topic">NOMBRE</label>
                 <input class="shadow-sm rounded form-control topic" id="patente" name="nombre" readonly="" th:value="${session.usuariosession.nombre}" >
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2" sec:authorize="hasAnyRole('ROLE_CLIENTE')">
                 <label for="marca" class="badge rounded-pill bg-light text-dark topic">APELLIDO</label>
                 <input class="shadow-sm rounded form-control topic" id="marca" name="apellido" readonly="" th:value="${session.usuariosession.apellido}">
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2" sec:authorize="hasAnyRole('ROLE_CLIENTE')">
                 <label for="modelo" class="badge rounded-pill bg-light text-dark topic">CELULAR</label>
                 <input class="shadow-sm rounded form-control topic" id="modelo" name="celular" readonly=""  th:value="${session.usuariosession.celular}">
             </div>
-            <div class="col-md-1">
+            <div class="col-md-1" sec:authorize="hasAnyRole('ROLE_CLIENTE')">
                 <label for="anio" class="badge rounded-pill bg-light text-dark topic" >DIRECCIÓN</label>
                 <input class="shadow-sm rounded form-control topic" id="anio" name="direccion" readonly="" th:value="${session.usuariosession.direccion}">
             </div>
-            <div class="col-md">
+            <div class="col-md" sec:authorize="hasAnyRole('ROLE_CLIENTE')">
                 <label for="km" class="badge rounded-pill bg-light text-dark topic" >USERNAME</label>
                 <input class="shadow-sm rounded form-control topic" id="km" name="username" readonly="" th:value="${session.usuariosession.username}">
             </div>
@@ -84,7 +84,7 @@
         
 <!--        TABLA DE PRESUPEUSTOS-->
 
-<table class="container">
+<table class="container" sec:authorize="hasAnyRole('ROLE_CLIENTE')">
 	<thead>
 		<tr>
 			<th><h1>Sites</h1></th>

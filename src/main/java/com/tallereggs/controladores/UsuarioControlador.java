@@ -26,13 +26,12 @@ public class UsuarioControlador {
 
     @Autowired
     private UsuarioServicio usuarioServicio;
-    
+
     @Autowired
     private VehiculoServicio vehiculoServicio;
-    
-    @Autowired 
-    private PresupuestoServicio presupuestoServicio;    
-    
+
+    @Autowired
+    private PresupuestoServicio presupuestoServicio;
 
     @GetMapping("/usuario/form")
     public String form() {
@@ -42,13 +41,15 @@ public class UsuarioControlador {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN') || hasAnyRole('ROLE_PERSONAL') || hasAnyRole('ROLE_CLIENTE')")
     @GetMapping("/inicioPersonal")
     public String inicioPersonal(ModelMap modelo, HttpSession session) {
-        
+
         Usuario u = (Usuario) session.getAttribute("usuariosession"); //Se toman los datos del usuario que inició sesión y luego se usa su ID para buscar un vehículo
         Vehiculo vehiculo = vehiculoServicio.listarVehiculoPorUsuario(u.getId());
         modelo.put("vehiculo", vehiculo);
         try {
-            List<Presupuesto> presupuestos =  presupuestoServicio.buscarPresupuestosPorIdVehiculo(vehiculo.getId());
-            modelo.put("presupuestos", presupuestos);
+            if (vehiculo != null) {
+                List<Presupuesto> presupuestos = presupuestoServicio.buscarPresupuestosPorIdVehiculo(vehiculo.getId());
+                modelo.put("presupuestos", presupuestos);
+            }
         } catch (ErrorServicio ex) {
             Logger.getLogger(UsuarioControlador.class.getName()).log(Level.SEVERE, null, ex);
         }
