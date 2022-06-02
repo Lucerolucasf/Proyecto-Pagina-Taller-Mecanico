@@ -1,29 +1,224 @@
-.body{
-    background-color: rgb(73, 69, 69);
+.body {
+    background-color: rgb(58, 57, 56);
+  /*  background-image: url(https://images.pexels.com/photos/159298/gears-cogs-machine-machinery-159298.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    /*Magneto*/
 }
 
-li h2{
+/*body::before{
+    content: "";
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    background-image: linear-gradient(blue-orange);
+    opacity: 1;
+} */
+
+body h2 {
     color: rgb(214, 214, 9);
+    font-family: magz;
+    margin-top: 5px;
+    align-items: center;
+    text-align: center;
 }
 
-.header{
+header ul h2{
+    margin-left: 30px;
+    animation-duration: 2s;
+}
+/*
+.header {
     background-color: rgb(172, 162, 162);
 }
-
-.header div{
+*/
+.header div {
     float: right;
 }
 
-.header button{
+.header button {
     margin-top: 5px;
     margin-right: 5px;
 }
 
-.modal-body{
+.modal-body {
     display: inline;
     align-content: center;
 }
 
-.button-iniciarSesion button{
+.button-iniciarSesion button {
     align-content: center;
 }
+
+main {
+    box-sizing: border-box;
+    padding: 15px;
+    margin: 15px;
+}
+
+.slider-frame {
+    animation: slide 5s infinite ease-in-out;
+}
+
+.slider-frame img {
+    height: 500px;
+    width: 500px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.queHacemos {
+    display: inline none;
+    text-align: center;
+    border: black solid 2px;
+}
+
+main div.queHacemos {
+    background-color: rgb(91, 92, 77);
+    font-size: 40px;
+}
+
+main div.queHacemos p{
+    align-items: center;
+    text-align:center ;
+}
+
+main h2 {
+    align-items: center;
+    margin-top: 10px 0px 0px 5px;
+    text-align: center;
+}
+
+main .texto-imagen {
+    border: black solid 1px;
+    display: flex;
+    margin-right: 150px;
+}
+
+.imagen-queHacemos img {
+    height: 400px;
+    float: left;
+    margin-bottom: 15px;
+}
+
+.texto-queHacemos, .texto-queHacemos2, .texto-queHacemos3{
+    background-color: rgb(65, 62, 62);
+    align-items: center;
+    text-align:center ;
+    color: white;
+}
+
+.texto-queHacemos {
+    text-align: center;
+    margin-left: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+main .texto-imagen2 {
+    border: black solid 1px;
+    display: flex;
+    margin-left: 150px;
+}
+
+.imagen-queHacemos2 img {
+    height: 400px;
+    float: right;
+    margin-bottom: 15px;
+}
+
+.texto-queHacemos2 {
+    text-align: center;
+    margin-left: 10px;
+}
+
+main .texto-imagen3 {
+    border: black solid 1px;
+    display: flex;
+    margin-right: 150px;
+}
+
+.imagen-queHacemos3 img {
+    height: 400px;
+    float: left;
+    margin-bottom: 15px;
+}
+
+.texto-queHacemos3 {
+    text-align: center;
+    margin-left: 10px;
+}
+
+div .contactanos {
+    color: white;
+}
+
+/*pie de pagina */
+
+.pie-pagina {
+    width: 100%;
+    background-color: black;
+}
+
+.pie-pagina .grupo-1 {
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 50px;
+    padding: 45px 0px;
+}
+
+.pie-pagina .grupo-1 h2 {
+    color: rgb(218, 199, 34);
+    margin-bottom: 25px;
+    font-size: 20px;
+}
+
+.pie-pagina .grupo-1 .red-social a {
+    display: inline-block;
+    text-decoration: none;
+    color: white;
+    margin-right: 10px;
+    text-align: center;
+    transition: all 300ms ease;
+}
+
+.pie-pagina .grupo-1 .red-social a:hover {
+    color: rgb(218, 199, 34);
+}
+
+.pie-pagina .grupo-1 .box p{
+    color: #9b9999;
+    margin-bottom: 10px;
+}
+
+.pie-pagina .grupo-1 .box figure{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pie-pagina .grupo-1 .box figure{
+    width: 250px;
+}
+
+.pie-pagina .grupo-1 .box h2{
+    text-align: left;
+}
+
+.pie-pagina .grupo-2{
+    background-color: #0a1a2a;
+    padding: 15px 10px;
+    text-align: center;
+    color: #fff;
+}
+
