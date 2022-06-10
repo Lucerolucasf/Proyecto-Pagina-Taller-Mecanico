@@ -78,7 +78,7 @@
                         <td th:text="${vehiculo.patente}"></td>
                         <td th:text="${vehiculo.usuario.nombre}"></td>
 
-                        <td><button type="button" class="btn btn-warning" data-bs-toggle="modal" th:data-bs-target="${'#datosVehiculo' + i.index}">Ver Detalles</button></td>
+                        <td><button type="button" class="btn btn-warning" data-bs-toggle="modal" th:data-bs-target="${'#verDetalle' + i.index}">Ver Detalles</button></td>
                         <td><a class="btn btn-success"data-bs-toggle="modal" data-bs-target="#anadirPresupuesto" sec:authorize="hasAnyRole('ROLE_ADMIN') || hasAnyRole('ROLE_PERSONAL')">Agregar Presupuesto</a></td>
                           <!--MODAL AÑADIR ELEMENTO-->
             <div class="modal fade" id="anadirPresupuesto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
